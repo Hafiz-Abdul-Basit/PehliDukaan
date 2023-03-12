@@ -282,6 +282,16 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PehliDukaan.Database\PehliDukaan.Database.csproj">
+      <Project>{68e6fc80-c6df-4fb7-bb20-6c017b6ffe56}</Project>
+      <Name>PehliDukaan.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PehliDukaan.Entities\PehliDukaan.Entities.csproj">
+      <Project>{36e9f3e8-c4d9-4e9d-92a6-893a2e8da2d2}</Project>
+      <Name>PehliDukaan.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
