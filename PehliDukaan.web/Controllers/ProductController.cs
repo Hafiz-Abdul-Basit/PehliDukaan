@@ -21,7 +21,7 @@ namespace PehliDukaan.web.Controllers
         public ActionResult ProductTable()
         {
               var products = productsService.GetProducts();
-              return View(products);
+              return PartialView(products);
         }
 
         // GET: Category
