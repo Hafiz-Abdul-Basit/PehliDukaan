@@ -1,0 +1,16 @@
+﻿@model List<PehliDukaan.Entities.Category>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var category in Model) {
+
+    <h1>@category.Name</h1>
+    <h1>@category.Description</h1>
+
+
+}

@@ -7,10 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PehliDukaan.Database {
-    public class PDContext : DbContext
-    {
+
+    public class PDContext : DbContext {
+
         public PDContext() : base("PehliDukaanConnection")
         {
+            
         }
 
         public DbSet<Category> Categories { get; set; }

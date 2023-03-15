@@ -7,13 +7,13 @@ namespace PehliDukaan.Database.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Initialized : IMigrationMetadata
+    public sealed partial class initialized : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initialized));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialized));
         
         string IMigrationMetadata.Id
         {
-            get { return "202303120920036_Initialized"; }
+            get { return "202303151633182_initialized"; }
         }
         
         string IMigrationMetadata.Source
