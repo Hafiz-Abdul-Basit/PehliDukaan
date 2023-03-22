@@ -24,7 +24,7 @@ namespace PehliDukaan.web.Controllers {
                 var path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
                 file.SaveAs(path);
 
-                result.Data = new { Success = true, ImageURL = path };
+                result.Data = new { Success = true, ImageURL = string.Format("/Content/images/ {0}", fileName) };
 
                 //var newImage = new Image() { Name = fileName };
 
