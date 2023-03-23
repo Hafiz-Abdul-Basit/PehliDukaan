@@ -1,5 +1,6 @@
 ﻿using PehliDukaan.Entities;
 using PehliDukaan.Services;
+using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,13 +34,17 @@ namespace PehliDukaan.web.Controllers
 
         // GET: Category
         public ActionResult Create() {
-            return PartialView();
+
+            CategoriesService categoriesService = new CategoriesService();
+
+            var categories = categoriesService.GetCategories();
+            return PartialView(categories);
         }
 
         [HttpPost]
         public ActionResult Create(Product product) {
 
-            productsService.SaveCategory(product);
+            productsService.SaveProduct(product);
 
             return RedirectToAction("ProductTable");
         }
@@ -53,9 +58,17 @@ namespace PehliDukaan.web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product) {
+        public ActionResult Edit(NewCategoryViewModel model) {
 
-            productsService.UpdateProduct(product);
+            CategoriesService categoriesService = new CategoriesService();
+
+            var newProduct = new Product();
+            newProduct.Name = model.Name;   
+            newProduct.Description = model.Description;
+            newProduct.Price = model.Price;
+            newProduct.Category = categoriesService.GetCategory(model.CategoryId);
+
+            productsService.UpdateProduct(newProduct);
 
             return RedirectToAction("ProductTable");
         }

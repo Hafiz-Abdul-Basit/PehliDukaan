@@ -1,13 +1,24 @@
-﻿using System;
+﻿using PehliDukaan.Services;
+using PehliDukaan.web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace PehliDukaan.web.Controllers {
+
     public class HomeController : Controller {
+
+        CategoriesService categoryService = new CategoriesService();
+
         public ActionResult Index() {
-            return View();
+
+            HomeViewModel model = new HomeViewModel();
+
+            model.Categories = categoryService.GetCategories();
+
+            return View(model);
         }
 
         public ActionResult About() {
