@@ -1,5 +1,5 @@
 ﻿using PehliDukaan.Entities;
-using PehliDukaan.Services;
+ using PehliDukaan.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace PehliDukaan.web.Controllers
         }
 
 
-        // GET: Category
+        // Create: Category
         public ActionResult Create()
         {
             return View();
@@ -34,7 +34,7 @@ namespace PehliDukaan.web.Controllers
         }
 
 
-        // GET: Category
+        // Edit: Category
         public ActionResult Edit(int Id) {
 
             var category = categoryService.GetCategory(Id);
@@ -49,7 +49,7 @@ namespace PehliDukaan.web.Controllers
 
         }
 
-        // GET: Category
+        // Delete: Category
         public ActionResult Delete(int Id) {
 
             var category = categoryService.GetCategory(Id);

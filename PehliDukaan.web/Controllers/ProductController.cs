@@ -42,9 +42,18 @@ namespace PehliDukaan.web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Product product) {
+        public ActionResult Create(NewCategoryViewModel model) {
 
-            productsService.SaveProduct(product);
+            CategoriesService categoriesService = new CategoriesService();
+
+            var newProduct = new Product();
+            newProduct.Name = model.Name;
+            newProduct.Description = model.Description;
+            newProduct.Price = model.Price;
+            newProduct.CategoryId = model.CategoryId;
+
+            //newProduct.Category = categoriesService.GetCategory(model.CategoryId);
+            productsService.SaveProduct(newProduct);
 
             return RedirectToAction("ProductTable");
         }
@@ -58,17 +67,9 @@ namespace PehliDukaan.web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(NewCategoryViewModel model) {
+        public ActionResult Edit(Product product) {
 
-            CategoriesService categoriesService = new CategoriesService();
-
-            var newProduct = new Product();
-            newProduct.Name = model.Name;   
-            newProduct.Description = model.Description;
-            newProduct.Price = model.Price;
-            newProduct.Category = categoriesService.GetCategory(model.CategoryId);
-
-            productsService.UpdateProduct(newProduct);
+            productsService.UpdateProduct(product);
 
             return RedirectToAction("ProductTable");
         }

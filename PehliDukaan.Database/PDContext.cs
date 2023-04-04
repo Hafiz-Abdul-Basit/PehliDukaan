@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PehliDukaan.Database {
 
-    public class PDContext : DbContext {
+    public class PDContext : DbContext, IDisposable {
 
         public PDContext() : base("PehliDukaanConnection")
         {

@@ -30,7 +30,8 @@ namespace PehliDukaan.Services {
 
             using (var context = new PDContext())
             {
-                context.Entry(product.Category).State = System.Data.Entity.EntityState.Unchanged;
+                context.Entry(product).State = EntityState.Unchanged;
+
                 context.Products.Add(product);
                 context.SaveChanges();
             }
@@ -40,7 +41,7 @@ namespace PehliDukaan.Services {
 
             using (var context = new PDContext()) {
 
-                context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                context.Entry(product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }
@@ -54,6 +55,8 @@ namespace PehliDukaan.Services {
                 context.SaveChanges();
             }
         }
+
+
 
     }
 }

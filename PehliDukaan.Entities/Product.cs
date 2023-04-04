@@ -9,6 +9,8 @@ namespace PehliDukaan.Entities {
     public class Product : BaseEntity { 
 
         public virtual Category Category { get; set; }
+
+        public int CategoryId { get; set; } 
         public decimal Price { get; set; }
 
     }
