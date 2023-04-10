@@ -1,5 +1,6 @@
 ﻿using PehliDukaan.Entities;
  using PehliDukaan.Services;
+using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,56 +14,91 @@ namespace PehliDukaan.web.Controllers
         CategoriesService categoryService = new CategoriesService();
 
         public ActionResult Index() {
-
-            var categories = categoryService.GetCategories();
          
-            return View(categories);
+            return View();
+        }
+
+        public ActionResult CategoryTable(string search) {
+
+            CategorySearchViewModel model = new CategorySearchViewModel();
+           
+            model.Categories = categoryService.GetCategories();
+
+            if (!string.IsNullOrEmpty(search)) {
+
+                model.SearchItem = search;
+                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+
+            }
+
+            return PartialView("CategoryTable", model);
         }
 
 
         // Create: Category
         public ActionResult Create()
         {
-            return View();
+            NewCategoryViewModel model = new NewCategoryViewModel();
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Create(Category category) 
+        public ActionResult Create(NewCategoryViewModel model) 
         {
-            categoryService.SaveCategory(category);
-            return RedirectToAction("Index");
+
+            var newCategory = new Category();
+            newCategory.Name = model.Name;
+            newCategory.Description = model.Description;
+            newCategory.ImageURL = model.ImageURL;
+            newCategory.isFeatured = model.isFeatured;
+            categoryService.SaveCategory(newCategory);
+
+            return RedirectToAction("CategoryTable");
+
         }
 
 
         // Edit: Category
         public ActionResult Edit(int Id) {
 
-            var category = categoryService.GetCategory(Id);
-            return View(category);
+
+            EditCategoryViewModel model = new EditCategoryViewModel();
+
+
+            var Category = categoryService.GetCategory(Id);
+
+            model.Id = Category.Id;
+            model.Name = Category.Name;
+            model.Description = Category.Description;
+            model.ImageURL = Category.ImageURL;
+            model.isFeatured = Category.isFeatured;
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Category category) {
+        public ActionResult Edit(EditCategoryViewModel model) {
 
-            categoryService.UpdateCategory(category);
-            return RedirectToAction("Index");
+
+            var existingCategory = categoryService.GetCategory(model.Id);
+            existingCategory.Name = model.Name;
+            existingCategory.Description = model.Description;
+            existingCategory.ImageURL= model.ImageURL;
+            existingCategory.isFeatured = model.isFeatured;
+
+            categoryService.UpdateCategory(existingCategory);
+
+            return RedirectToAction("CategoryTable");
 
         }
 
         // Delete: Category
+        [HttpPost]
         public ActionResult Delete(int Id) {
 
-            var category = categoryService.GetCategory(Id);
+            categoryService.DeleteCategory(Id);
 
-            return View(category);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(Category category) {
-
-            categoryService.DeleteCategory(category.Id);
-            return RedirectToAction("Index");
-
+            return RedirectToAction("CategoryTable");
         }
     }
 }

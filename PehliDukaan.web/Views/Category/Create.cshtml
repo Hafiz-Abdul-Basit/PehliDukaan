@@ -1,34 +1,66 @@
 ﻿
 @{
     ViewBag.Title = "Create";
+
+    var imageURL = "/Content/images/profile.png";
+
 }
 
 <h2>Create</h2>
 
-<form method="post">
+<form id="createCategory">
 
-    <label>Name</label>
-    <input name="Name" />
-    <br />
+    <div class="row">
 
-    <label>Description</label>
+        <div class="col-md-8">
 
-    <input name="Description" />
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" name="Name" />
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" name="Description" />
+        </div>
+        <div class="form-group">
+            <label>Image</label>
 
-    <br />
+            <input id="ImageURL" name="ImageURL" type="hidden" />
+            <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
 
-    <label>Image</label>
+            <div class="form-group">
+                <label>Is Featured ?</label>
+                <div class="input-group">
+                    <div class="radio form-control">
+                        <label> <input name="isFeatured" type="radio" value="True" /> True</label>
+                    </div>
+                    <div class="radio form-control">
+                        <label> <input name="isFeatured" type="radio" value="False" /> False</label>
+                    </div>
 
-    <input id="ImageURL" name="ImageURL" type="hidden"/>
-    <input id="imageUpload" name="Image" type="file" accept=".png, .jpg"/>
-    <img id="categoryImage"/>
+                </div>
 
-    <br />
+            </div>
+                <button id="saveBtn" class="btn btn-primary" type="button">Save</button>
 
-    <button type="submit">Save</button>
+        </div>
+        </div>
+            <div class="col-md-4">
 
+
+                <div class="thumb">
+
+                    <img class="img-thumbnail img-fluid" id="categoryImage" src="@imageURL"/>
+
+                </div>
+
+            </div>
+
+       
+
+
+    </div>
 </form>
-
 
 <script>
     $("#imageUpload").change(function () {
@@ -64,4 +96,22 @@
 
             });
     })
+
+    $("#saveBtn").click(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Category/Create',
+            data: $("#createCategory").serialize()
+        })
+            .done(function (response) {
+                $("#tableContainer").html(response);
+                $("#actionContainer").html("")
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+
+            });
+    });
+
 </script>

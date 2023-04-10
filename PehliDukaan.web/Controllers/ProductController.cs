@@ -12,6 +12,7 @@ namespace PehliDukaan.web.Controllers
     public class ProductController : Controller
     {
         ProductsService productsService = new ProductsService();
+        CategoriesService categoryService = new CategoriesService();
 
         // GET: Product
         public ActionResult Index()
@@ -21,38 +22,36 @@ namespace PehliDukaan.web.Controllers
 
         public ActionResult ProductTable(string search)
         {
-              var products = productsService.GetProducts();
+              ProductSearchViewModel model = new ProductSearchViewModel();
+              model.Products = productsService.GetProducts();
               
               if (string.IsNullOrEmpty(search) == false) {
 
-              products = products.Where(p => p.Name !=null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                model.Products = model.Products.Where(p => p.Name !=null && p.Name.ToLower().Contains(search.ToLower())).ToList();
               
             }
               
-              return PartialView(products);
+              return PartialView(model);
         }
 
         // GET: Category
         public ActionResult Create() {
 
-            CategoriesService categoriesService = new CategoriesService();
+            NewProductViewModel model = new NewProductViewModel();
 
-            var categories = categoriesService.GetCategories();
-            return PartialView(categories);
+            model.AvailableCategories = categoryService.GetCategories();
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Create(NewCategoryViewModel model) {
+        public ActionResult Create(NewProductViewModel model) {
 
-            CategoriesService categoriesService = new CategoriesService();
 
             var newProduct = new Product();
             newProduct.Name = model.Name;
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
-            newProduct.CategoryId = model.CategoryId;
-
-            //newProduct.Category = categoriesService.GetCategory(model.CategoryId);
+            newProduct.Category = categoryService.GetCategory(model.CategoryId);
             productsService.SaveProduct(newProduct);
 
             return RedirectToAction("ProductTable");
@@ -61,15 +60,31 @@ namespace PehliDukaan.web.Controllers
         // GET: Category
         public ActionResult Edit(int Id) {
 
+            EditProductViewModel model = new EditProductViewModel();
+
+
             var product = productsService.GetProduct(Id);
 
-            return PartialView(product);
+            model.Id = product.Id;
+            model.Name = product.Name;
+            model.Description = product.Description;    
+            model.Price = product.Price;
+            model.CategoryId = product.Category != null ? product.Category.Id: 0;
+
+            model.AvailableCategories = categoryService.GetCategories();
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product) {
+        public ActionResult Edit(EditProductViewModel model) {
 
-            productsService.UpdateProduct(product);
+            var existingProduct = productsService.GetProduct(model.Id);
+            existingProduct.Name = model.Name;
+            existingProduct.Description = model.Description;
+            existingProduct.Price = model.Price;
+            existingProduct.Category = categoryService.GetCategory(model.CategoryId);
+           
+            productsService.UpdateProduct(existingProduct);
 
             return RedirectToAction("ProductTable");
         }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace PehliDukaan.Services {
     public class CategoriesService {
@@ -20,7 +21,14 @@ namespace PehliDukaan.Services {
         public List<Category> GetCategories() {
 
             using (var context = new PDContext()) {
-                return context.Categories.ToList();
+                return context.Categories.Include(x=>x.Products).ToList();
+            }
+        }
+
+        public List<Category> GetFeaturedCategories() {
+
+            using (var context = new PDContext()) {
+                return context.Categories.Where( x=> x.isFeatured && x.ImageURL != null).ToList();
             }
         }
 

@@ -8,6 +8,10 @@ namespace PehliDukaan.web.Models {
 
     public class HomeViewModel {
 
-        public List<Category> Categories { get; set; }
+        public List<Category> FeaturedCategories { get; set; }
+        public List<Product> FeaturedProducts { get; set; }
+
     }
+
+
 }

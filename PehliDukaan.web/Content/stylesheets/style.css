@@ -47,6 +47,10 @@
 		-webkit-text-size-adjust: 100%;
 		   -ms-text-size-adjust: 100%;
 	}
+.wrap-td {
+	width: 1px;
+	white-space: nowrap;
+}
 
 	body {
 		line-height: 1;
@@ -2969,3 +2973,4 @@ article .more-link a:hover:after {
   	   -moz-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.02);
   	        box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.02);
 }
+

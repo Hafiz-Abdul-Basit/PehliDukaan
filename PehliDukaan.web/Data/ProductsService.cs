@@ -14,7 +14,7 @@ namespace PehliDukaan.Services {
         public Product GetProduct(int Id) {
 
             using (var context = new PDContext()) {
-                return context.Products.Find(Id);
+                return context.Products.Where(x=>x.Id == Id).Include(x => x.Category).FirstOrDefault();
             }
         }
 
