@@ -49,6 +49,7 @@ namespace PehliDukaan.web.Controllers
         [HttpPost]
         public ActionResult Create(NewProductViewModel model) {
 
+            if (ModelState.IsValid) {
 
             var newProduct = new Product();
             newProduct.Name = model.Name;
@@ -59,6 +60,10 @@ namespace PehliDukaan.web.Controllers
             productsService.SaveProduct(newProduct);
 
             return RedirectToAction("ProductTable");
+           }
+            else {
+                return new HttpStatusCodeResult(500);
+            }
         }
 
         // GET: Category

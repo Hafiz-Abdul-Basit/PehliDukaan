@@ -53,25 +53,63 @@
 
 <script>
 
+    $('#editProduct').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+            },
+            Description: {
+                maxlength: 500
+            },
+            Price: {
+                range: [1, 100000]
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name is required',
+                minlength: 'Minimum Length is 5',
+                maxlength: 'Maximum Length is 50'
+            },
+            Description: {
+                maxlength: 'Maximum Length is 500'
+            },
+            Price: {
+                range: 'Price must be within range of 1 - 100000.'
+            }
+        }
+    });
+
 
     $("#updateBtn").click(function () {
 
-        $.ajax({
-            type: 'POST',
-            url: '/Product/Edit',
-            data: $("#editProduct").serialize()
-
-        })
-            .done(function (response) {
-                focusAction("tableContiner");
-                $("#tableContiner").html(response);
-                $("#actionContainer").html("")
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FAIL");
-
-            });
-    });
+		if ($("#editProduct").valid()) {
+			$.ajax({
+				type: 'POST',
+				url: '/Product/Edit',
+				data: $("#editProduct").serialize()
+			})
+			.done(function (response) {
+				$("#tableContiner").html(response);
+				$("#actionContainer").html("");
+				focusAction("tableContiner");
+			})
+			.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("FAIL");
+			});
+		}
+		else {
+			swal({
+				title: "Warning",
+				text: "Please enter all valid data in fields.",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			});
+		}
+	});
 
    	$("#imageUpload").change(function () {
 		var element = this;
@@ -87,7 +125,7 @@
 
 		$.ajax({
 			type: 'POST',
-			url: 'Shared/UploadImage',
+			url: '/Shared/UploadImage',
 			dataType: 'json',
 			data: formData,
 			contentType: false,

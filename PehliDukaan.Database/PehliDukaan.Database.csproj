@@ -81,6 +81,10 @@
     <Compile Include="Migrations\202304241138372_imageURLinProducts.designer.cs">
       <DependentUpon>202304241138372_imageURLinProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304241916484_addedBasicValidation.cs" />
+    <Compile Include="Migrations\202304241916484_addedBasicValidation.designer.cs">
+      <DependentUpon>202304241916484_addedBasicValidation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PDContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304241138372_imageURLinProducts.resx">
       <DependentUpon>202304241138372_imageURLinProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304241916484_addedBasicValidation.resx">
+      <DependentUpon>202304241916484_addedBasicValidation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

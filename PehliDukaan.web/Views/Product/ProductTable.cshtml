@@ -133,30 +133,30 @@
             });
     });
 
-    	$("#resetBtn").click(function () {
-		var searchValue = '';
+    $("#resetBtn").click(function () {
+        var searchValue = '';
 
-		$.ajax({
-			url: '/Product/ProductTable',
-			data: {
-				search: searchValue
-			}
-		})
-        .done(function (response) {
-        	$("#tableContiner").html(response);
+        $.ajax({
+            url: '/Product/ProductTable',
+            data: {
+                search: searchValue
+            }
         })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-        	alert("FAIL");
-        });
-	});
+            .done(function (response) {
+                $("#tableContiner").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
 
     $("#newBtn").click(function () {
         $.ajax({
-          url: '/Product/Create',
+            url: '/Product/Create',
         })
             .done(function (response) {
                 $("#actionContainer").html(response);
-                focusAction("actionContainer");               
+                focusAction("actionContainer");
 
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -174,7 +174,7 @@
         })
             .done(function (response) {
                 $("#actionContainer").html(response);
-                focusAction("actionContainer");               
+                focusAction("actionContainer");
 
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -233,6 +233,6 @@
 
     });
 
-   
+
 
 </script>

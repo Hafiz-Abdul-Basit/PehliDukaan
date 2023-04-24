@@ -46,20 +46,25 @@ namespace PehliDukaan.web.Controllers
             return PartialView(model);
         }
 
+
         [HttpPost]
-        public ActionResult Create(NewCategoryViewModel model) 
-        {
+        public ActionResult Create(NewCategoryViewModel model) {
 
-            var newCategory = new Category();
-            newCategory.Name = model.Name;
-            newCategory.Description = model.Description;
-            newCategory.ImageURL = model.ImageURL;
-            newCategory.isFeatured = model.isFeatured;
-            //categoryService.SaveCategory(newCategory);
-            categoryService.SaveCategory(newCategory);
+            if (ModelState.IsValid) {
 
-            return RedirectToAction("CategoryTable");
+                var newCategory = new Category();
+                newCategory.Name = model.Name;
+                newCategory.Description = model.Description;
+                newCategory.ImageURL = model.ImageURL;
+                newCategory.isFeatured = model.isFeatured;
 
+                categoryService.SaveCategory(newCategory);
+
+                return RedirectToAction("CategoryTable");
+            }
+            else {
+                return new HttpStatusCodeResult(500);
+            }
         }
 
 
@@ -85,18 +90,19 @@ namespace PehliDukaan.web.Controllers
         [HttpPost]
         public ActionResult Edit(EditCategoryViewModel model) {
 
+    
+                var existingCategory = categoryService.GetCategory(model.Id);
+                existingCategory.Name = model.Name;
+                existingCategory.Description = model.Description;
+                existingCategory.ImageURL = model.ImageURL;
+                existingCategory.isFeatured = model.isFeatured;
 
-            var existingCategory = categoryService.GetCategory(model.Id);
-            existingCategory.Name = model.Name;
-            existingCategory.Description = model.Description;
-            existingCategory.ImageURL= model.ImageURL;
-            existingCategory.isFeatured = model.isFeatured;
+                categoryService.UpdateCategory(existingCategory);
 
-            categoryService.UpdateCategory(existingCategory);
-
-            return RedirectToAction("CategoryTable");
-
-        }
+                return RedirectToAction("CategoryTable");
+           }
+          
+     
 
         // Delete: Category
         [HttpPost]
