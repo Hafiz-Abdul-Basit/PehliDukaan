@@ -8,6 +8,7 @@ namespace PehliDukaan.web.Models.ViewModels {
 
     public class ProductSearchViewModel {
 
+        public int PageNo { get; set; }
         public List<Product> Products { get; set; }
         public string SearchItem { get; set; }
 
@@ -20,6 +21,7 @@ namespace PehliDukaan.web.Models.ViewModels {
         public int CategoryId { get; set; }
         public decimal Price { get; set; }
 
+        public string ImageURL { get; set; }
         public List<Category> AvailableCategories { get; set; }
     }
 
@@ -31,6 +33,7 @@ namespace PehliDukaan.web.Models.ViewModels {
         public int CategoryId { get; set; } 
         public decimal Price { get; set; }
 
+        public string ImageURL { get; set; }
         public List<Category> AvailableCategories { get; set; }
     }
 }

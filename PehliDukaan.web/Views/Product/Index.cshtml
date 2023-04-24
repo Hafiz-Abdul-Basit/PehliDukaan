@@ -1,12 +1,10 @@
-﻿ 
+﻿
 @{
     ViewBag.Title = "Products";
 }
 
-
 <section class="flat-row flat-iconbox">
     <div class="container">
-
         <div class="row">
             <div class="col-md-12">
                 <div class="title-section">
@@ -17,25 +15,23 @@
             </div>
         </div>
 
-
-        <div id="tableContainer">
-
-
+        <div id="tableContiner">
             @{
                 Html.RenderAction("ProductTable");
-
-
             }
-
         </div>
 
         <hr />
-
         <div id="actionContainer">
 
-
         </div>
-
     </div>
-
 </section>
+
+<script>
+	function focusAction(controlToFocus) {
+		$('html, body').animate({
+			scrollTop: $("#" + controlToFocus).offset().top - 150
+		}, 1000);
+	}
+</script>

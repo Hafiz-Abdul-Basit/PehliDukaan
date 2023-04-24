@@ -1,11 +1,15 @@
-﻿using PehliDukaan.Entities;
- using PehliDukaan.Services;
+﻿//using PehliDukaan.Entities;
+using PehliDukaan.Entities;
+//using PehliDukaan.Services;
 using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PehliDukaan.Database.DataService;
+
+
 
 namespace PehliDukaan.web.Controllers
 {
@@ -21,9 +25,9 @@ namespace PehliDukaan.web.Controllers
         public ActionResult CategoryTable(string search) {
 
             CategorySearchViewModel model = new CategorySearchViewModel();
-           
-            model.Categories = categoryService.GetCategories();
 
+            
+            model.Categories = categoryService.GetCategories();
             if (!string.IsNullOrEmpty(search)) {
 
                 model.SearchItem = search;
@@ -51,6 +55,7 @@ namespace PehliDukaan.web.Controllers
             newCategory.Description = model.Description;
             newCategory.ImageURL = model.ImageURL;
             newCategory.isFeatured = model.isFeatured;
+            //categoryService.SaveCategory(newCategory);
             categoryService.SaveCategory(newCategory);
 
             return RedirectToAction("CategoryTable");
@@ -65,6 +70,7 @@ namespace PehliDukaan.web.Controllers
             EditCategoryViewModel model = new EditCategoryViewModel();
 
 
+            //var Category = categoryService.GetCategory(Id);
             var Category = categoryService.GetCategory(Id);
 
             model.Id = Category.Id;
@@ -95,7 +101,6 @@ namespace PehliDukaan.web.Controllers
         // Delete: Category
         [HttpPost]
         public ActionResult Delete(int Id) {
-
             categoryService.DeleteCategory(Id);
 
             return RedirectToAction("CategoryTable");

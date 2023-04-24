@@ -3,6 +3,9 @@
     ViewBag.Title = "ProductTable";
 }
 
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
 <style>
     .wrap-td {
         width: 1px;
@@ -28,17 +31,21 @@
                 <div class="form-group">
                     <label>Action</label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4 pr-0">
                             <button class="form-control btn btn-success" type="button" id="searchBtn">Search</button>
 
                         </div>
-                        <div class="col-md-6">
-                            <button class="form-control btn btn-primary" type="button" id="newBtn">New</button>
+
+                        <div class="col-md-4 pr-0">
+                            <button class="form-control btn btn-info" type="button" id="resetBtn">Reset</button>
 
                         </div>
-                        <div />
+                        <div class="col-md-4 pr-0">
+                            <button class="form-control btn btn-success" type="button" id="newBtn">New</button>
 
-                     
+                        </div>
+
+
 
                     </div>
                 </div>
@@ -48,15 +55,15 @@
        
 </div>
 
-<div >
+<div>
 
-    <table class="table table-striped table-dark">
+    <table id="ProductsTable" class="table table-striped table-dark">
         <thead class="thead-dark">
             <tr>
-                <td>Product Name</td>
-                <td>Category</td>
-                <td>Price</td>
-                <td class="wrap-td">Actions</td>
+                <th class="font-weight-bold">Product Name</th>
+                <th class="font-weight-bold">Category</th>
+                <th class="font-weight-bold">Price</th>
+                <th class="wrap-td font-weight-bold">Actions </th>
             </tr>
 
         </thead>
@@ -82,6 +89,8 @@
                         <td class="wrap-td">
                             <button class="editBtn" data-id="@product.Id">Edit</button>
                             <button class="deleteBtn" data-id="@product.Id">Delete</button>
+                            <button class="addtoCart" data-id="@product.Id">Add to Cart</button>
+
 
                         </td>
                     </tr>
@@ -95,11 +104,15 @@
             }
         </tbody>
     </table>
+
 </div>
 
 
 
 <script>
+
+    $("#ProductsTable").DataTable({ searching: false });
+
 
     $("#searchBtn").click(function () {
         var searchValue = $("#searchTxt").val();
@@ -110,9 +123,9 @@
             }
         })
             .done(function (response) {
-                $("#tableContainer").html(response);
+                $("#tableContiner").html(response);
 
-               
+
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
@@ -120,13 +133,31 @@
             });
     });
 
+    	$("#resetBtn").click(function () {
+		var searchValue = '';
+
+		$.ajax({
+			url: '/Product/ProductTable',
+			data: {
+				search: searchValue
+			}
+		})
+        .done(function (response) {
+        	$("#tableContiner").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+
     $("#newBtn").click(function () {
         $.ajax({
-            url: '/Product/Create',
+          url: '/Product/Create',
         })
             .done(function (response) {
                 $("#actionContainer").html(response);
-                focusAction();
+                focusAction("actionContainer");               
+
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
@@ -143,7 +174,8 @@
         })
             .done(function (response) {
                 $("#actionContainer").html(response);
-                focusAction();
+                focusAction("actionContainer");               
+
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
@@ -154,32 +186,53 @@
 
     $(".deleteBtn").click(function () {
 
-        var confirmDelete = confirm("Are you sure you want to delete this product");
-
-        if (confirmDelete) {
-
-        $.ajax({
-            type: "POST",
-            url: '/Product/Delete',
-            data: {
-                Id: $(this).attr("data-id")
-            }
+        swal({
+            title: "Confirm?",
+            text: "Are you sure you want to delete this product?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-            .done(function (response) {
-                $("#tableContainer").html(response);
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FAIL");
+            .then((willDelete) => {
+                if (willDelete) {
 
+
+                    $.ajax({
+                        type: "POST",
+                        url: '/Product/Delete',
+                        data: {
+                            Id: $(this).attr("data-id")
+                        }
+                    })
+                        .done(function (response) {
+                            $("#tableContiner").html(response);
+                            swal("Record Deleted Successfully!", {
+                                icon: "success",
+                            });
+                        })
+                        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("FAIL");
+
+                        });
+                }
             });
-        }
+
     });
 
-    function focusAction() {
-        $('html, body').animate({
-            scrollTop: $("#actionContainer").offset().top - 150
-        }, 1000);
-    }
-    
+    var products = [];
+
+    $(".addtoCart").click(function () {
+
+        var productID = $(this).attr("data-id");
+
+        products.push(productID);
+
+        $.cookie("CartProducts", products.join("-"), { path: "/" });
+
+        alert("Product added to cart")
+
+    });
+
+   
 
 </script>

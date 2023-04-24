@@ -40,9 +40,16 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Build.Framework.17.5.0\lib\net472\Microsoft.Build.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataService\CategoriesService.cs" />
+    <Compile Include="DataService\ConfigurationsService.cs" />
+    <Compile Include="DataService\ProductService.cs" />
     <Compile Include="Migrations\202303151633182_initialized.cs" />
     <Compile Include="Migrations\202303151633182_initialized.designer.cs">
       <DependentUpon>202303151633182_initialized.cs</DependentUpon>
@@ -63,6 +73,14 @@
     <Compile Include="Migrations\202304062058067_addedIsfeatured.designer.cs">
       <DependentUpon>202304062058067_addedIsfeatured.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304132238426_configCreated.cs" />
+    <Compile Include="Migrations\202304132238426_configCreated.designer.cs">
+      <DependentUpon>202304132238426_configCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304241138372_imageURLinProducts.cs" />
+    <Compile Include="Migrations\202304241138372_imageURLinProducts.designer.cs">
+      <DependentUpon>202304241138372_imageURLinProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PDContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,12 +88,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PehliDukaan.Entities\PehliDukaan.Entities.csproj">
-      <Project>{3873D63C-2073-4D13-BFEA-0BC2AD79C695}</Project>
-      <Name>PehliDukaan.Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202303151633182_initialized.resx">
@@ -87,6 +99,21 @@
     <EmbeddedResource Include="Migrations\202304062058067_addedIsfeatured.resx">
       <DependentUpon>202304062058067_addedIsfeatured.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304132238426_configCreated.resx">
+      <DependentUpon>202304132238426_configCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304241138372_imageURLinProducts.resx">
+      <DependentUpon>202304241138372_imageURLinProducts.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PehliDukaan.Entities\PehliDukaan.Entities.csproj">
+      <Project>{3873d63c-2073-4d13-bfea-0bc2ad79c695}</Project>
+      <Name>PehliDukaan.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

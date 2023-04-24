@@ -6,10 +6,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using PehliDukaan.web.Data;
 
 namespace PehliDukaan.Services {
     public class ProductsService {
 
+        #region Singleton
+        public static ProductsService ClassObject {
+
+            get {
+                if (privateInMemoryObject == null) privateInMemoryObject = new ProductsService();
+                return privateInMemoryObject;
+            }
+
+
+        }
+        private static ProductsService privateInMemoryObject { get; set; }
+
+        private ProductsService() {
+
+
+        }
+
+        #endregion
 
         public Product GetProduct(int Id) {
 
@@ -18,7 +37,14 @@ namespace PehliDukaan.Services {
             }
         }
 
-        public List<Product> GetProducts() {
+        public List<Product> GetProducts(List<int> IDs) {
+
+            using (var context = new PDContext()) {
+                return context.Products.Where(product => IDs.Contains(product.Id)).ToList();
+            }
+        }
+
+        public List<Product> GetProducts(int pageNo) {
 
 
             using (var context = new PDContext()) {

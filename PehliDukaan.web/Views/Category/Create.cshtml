@@ -1,66 +1,51 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Create";
 
     var imageURL = "/Content/images/profile.png";
 
 }
 
-<h2>Create</h2>
+<h2>Create Category</h2>
 
 <form id="createCategory">
-
     <div class="row">
-
         <div class="col-md-8">
-
-        <div class="form-group">
-            <label>Name</label>
-            <input class="form-control" name="Name" />
-        </div>
-        <div class="form-group">
-            <label>Description</label>
-            <input class="form-control" name="Description" />
-        </div>
-        <div class="form-group">
-            <label>Image</label>
-
-            <input id="ImageURL" name="ImageURL" type="hidden" />
-            <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-
             <div class="form-group">
-                <label>Is Featured ?</label>
+                <label>Name <span class="text-danger">*</span></label>
+                <input class="form-control" name="Name" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" name="Description" />
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <input type="hidden" id="ImageURL" name="ImageURL" />
+                <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+            </div>
+            <div class="form-group">
+                <label>Is Featured?</label>
                 <div class="input-group">
                     <div class="radio form-control">
-                        <label> <input name="isFeatured" type="radio" value="True" /> True</label>
+                        <label><input name="isFeatured" type="radio" value="True" /> True</label>
                     </div>
                     <div class="radio form-control">
-                        <label> <input name="isFeatured" type="radio" value="False" /> False</label>
+                        <label><input name="isFeatured" type="radio" value="False" /> False</label>
                     </div>
-
                 </div>
-
             </div>
-                <button id="saveBtn" class="btn btn-primary" type="button">Save</button>
-
         </div>
-        </div>
-            <div class="col-md-4">
-
-
-                <div class="thumb">
-
-                    <img class="img-thumbnail img-fluid" id="categoryImage" src="@imageURL"/>
-
-                </div>
-
+        <div class="col-md-4">
+            <div class="thumb">
+                <img class="img-thumbnail img-fluid" id="categoryImage" src="@imageURL" />
             </div>
-
-       
-
-
+        </div>
     </div>
+
+    <button id="saveBtn" type="button" class="btn btn-primary">Save</button>
+    <button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
 </form>
+
 
 <script>
     $("#imageUpload").change(function () {
@@ -105,13 +90,20 @@
             data: $("#createCategory").serialize()
         })
             .done(function (response) {
-                $("#tableContainer").html(response);
+                focusAction("tableContiner");
+                $("#tableContiner").html(response);
                 $("#actionContainer").html("")
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
 
             });
+    });
+
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+
+        focusAction("tableContiner");
     });
 
 </script>

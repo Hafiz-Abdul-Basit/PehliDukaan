@@ -1,5 +1,4 @@
-﻿using PehliDukaan.Database;
-using PehliDukaan.Entities;
+﻿using PehliDukaan.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
-namespace PehliDukaan.Services {
+namespace PehliDukaan.Database.DataService {
     public class CategoriesService {
+
+        //public static CategoriesService ClassObject {
+
+        //    get {
+        //        if (privateInMemoryObject == null) privateInMemoryObject = new CategoriesService();
+        //        return privateInMemoryObject;
+        //    }
+
+
+        //}
+        //private static CategoriesService privateInMemoryObject { get; set; }
+
+        //private CategoriesService() {
+
+
+        //}
 
 
         public Category GetCategory(int Id) {
@@ -21,21 +36,21 @@ namespace PehliDukaan.Services {
         public List<Category> GetCategories() {
 
             using (var context = new PDContext()) {
-                return context.Categories.Include(x=>x.Products).ToList();
+                return context.Categories.Include(x => x.Products).ToList();
             }
+            //return new List<Category> { GetCategory(0) };
         }
 
         public List<Category> GetFeaturedCategories() {
 
             using (var context = new PDContext()) {
-                return context.Categories.Where( x=> x.isFeatured && x.ImageURL != null).ToList();
+                return context.Categories.Where(x => x.isFeatured && x.ImageURL != null).ToList();
             }
         }
 
-        public void SaveCategory(Category category) { 
+        public void SaveCategory(Category category) {
 
-            using (var context = new PDContext())
-            {
+            using (var context = new PDContext()) {
                 context.Categories.Add(category);
                 context.SaveChanges();
             }

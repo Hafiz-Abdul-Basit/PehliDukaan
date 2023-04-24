@@ -175,8 +175,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
-    <Compile Include="Data\CategoriesService.cs" />
-    <Compile Include="Data\ProductsService.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,6 +185,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\NewProductViewModel.cs" />
+    <Compile Include="Models\ViewModels\ShopViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -195,6 +195,7 @@
     <Content Include="Content\images\avatar-1.png" />
     <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\bg-countdown-1-962x506.jpg" />
+    <Content Include="Content\images\ECOM-LOGO.png" />
     <Content Include="Content\images\profile.png" />
     <Content Include="Content\images\blog\1.jpg" />
     <Content Include="Content\images\blog\10.jpg" />
@@ -276,8 +277,6 @@
     <Content Include="Content\images\instagram\instagram-3-337x280.jpg" />
     <Content Include="Content\images\instagram\instagram-4-337x280.jpg" />
     <Content Include="Content\images\instagram\instagram-5-337x280.jpg" />
-    <Content Include="Content\images\logo%402x.png" />
-    <Content Include="Content\images\Logo.png" />
     <Content Include="Content\images\maps\map_icon.png" />
     <Content Include="Content\images\mega-menu\1.jpg" />
     <Content Include="Content\images\parallax\bg-parallax1.jpg" />
@@ -540,6 +539,7 @@
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Category\CategoryTable.cshtml" />
+    <Content Include="Views\Shop\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -557,8 +557,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\PehliDukaan.Database\PehliDukaan.Database.csproj">
-      <Project>{81151784-E14F-45FA-82C6-BAA091408288}</Project>
+      <Project>{81151784-e14f-45fa-82c6-baa091408288}</Project>
       <Name>PehliDukaan.Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\PehliDukaan.Entities\PehliDukaan.Entities.csproj">

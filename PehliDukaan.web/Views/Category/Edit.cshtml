@@ -33,7 +33,7 @@
 
                 <input id="ImageURL" name="ImageURL" type="hidden" value="@Model.ImageURL" />
                 <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-               
+
             </div>
 
             <div class="form-group">
@@ -64,8 +64,10 @@
 
 
     </div>
-   
+
     <button id="updateBtn" type="button" class="btn btn-primary">Update</button>
+    <button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
+
 
 </form>
 
@@ -112,15 +114,24 @@
             type: 'POST',
             url: '/Category/Edit',
             data: $("#editCategory").serialize()
+
         })
             .done(function (response) {
-                $("#tableContainer").html(response);
+                focusAction("tableContiner");
+                $("#tableContiner").html(response);
                 $("#actionContainer").html("")
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
 
             });
+    });
+
+
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+
+        focusAction("tableContiner");
     });
 
 </script>

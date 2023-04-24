@@ -1,11 +1,12 @@
 ﻿using PehliDukaan.Entities;
-using PehliDukaan.Services;
 using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PehliDukaan.Database.DataService;
+
 
 namespace PehliDukaan.web.Controllers
 {
@@ -22,11 +23,13 @@ namespace PehliDukaan.web.Controllers
 
         public ActionResult ProductTable(string search)
         {
+
               ProductSearchViewModel model = new ProductSearchViewModel();
-              model.Products = productsService.GetProducts();
+               model.Products = productsService.GetProducts();
               
               if (string.IsNullOrEmpty(search) == false) {
 
+                model.SearchItem = search;
                 model.Products = model.Products.Where(p => p.Name !=null && p.Name.ToLower().Contains(search.ToLower())).ToList();
               
             }
@@ -52,6 +55,7 @@ namespace PehliDukaan.web.Controllers
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
             newProduct.Category = categoryService.GetCategory(model.CategoryId);
+            newProduct.ImageURL = model.ImageURL;
             productsService.SaveProduct(newProduct);
 
             return RedirectToAction("ProductTable");
@@ -70,6 +74,7 @@ namespace PehliDukaan.web.Controllers
             model.Description = product.Description;    
             model.Price = product.Price;
             model.CategoryId = product.Category != null ? product.Category.Id: 0;
+            model.ImageURL = product.ImageURL;
 
             model.AvailableCategories = categoryService.GetCategories();
             return PartialView(model);
@@ -83,7 +88,8 @@ namespace PehliDukaan.web.Controllers
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
             existingProduct.Category = categoryService.GetCategory(model.CategoryId);
-           
+            existingProduct.ImageURL = model.ImageURL;
+
             productsService.UpdateProduct(existingProduct);
 
             return RedirectToAction("ProductTable");
