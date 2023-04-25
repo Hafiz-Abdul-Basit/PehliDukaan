@@ -89,7 +89,7 @@
                         <td class="wrap-td">
                             <button class="editBtn" data-id="@product.Id">Edit</button>
                             <button class="deleteBtn" data-id="@product.Id">Delete</button>
-                            <button class="addtoCart" data-id="@product.Id">Add to Cart</button>
+                            @*<button class="addtoCart" data-id="@product.Id">Add to Cart</button>*@
 
 
                         </td>
@@ -98,9 +98,9 @@
                 }
             }
             else {
-                <tr>
+                @*<tr>
                     <td class="text-danger" colspan="4">No Products Found</td>
-                </tr>
+                </tr>*@
             }
         </tbody>
     </table>

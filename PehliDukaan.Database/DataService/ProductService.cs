@@ -55,6 +55,25 @@ namespace PehliDukaan.Database.DataService {
             }
         }
 
+
+        public List<Product> GetProducts(int pageNo, int pageSize) {
+            using (var context = new PDContext()) {
+                return context.Products.OrderByDescending(x => x.Id).Skip((pageNo - 1) * pageSize).Take(pageSize).Include(x => x.Category).ToList();
+            }
+        }
+
+        public List<Product> GetLatestProducts(int numberOfProducts) {
+            using (var context = new PDContext()) {
+                return context.Products.OrderByDescending(x => x.Id).Take(numberOfProducts).Include(x => x.Category).ToList();
+            }
+        }
+
+        public List<Product> GetProductsByCategory(int categoryID, int pageSize) {
+            using (var context = new PDContext()) {
+                return context.Products.Where(x => x.Category.Id == categoryID).OrderByDescending(x => x.Id).Take(pageSize).Include(x => x.Category).ToList();
+            }
+        }
+
         public void SaveProduct(Product product) {
 
             using (var context = new PDContext()) {
