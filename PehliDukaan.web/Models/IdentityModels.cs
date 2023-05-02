@@ -21,7 +21,7 @@ namespace PehliDukaan.web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("PehliDukaanConnection", throwIfV1Schema: false)
         {
         }
 

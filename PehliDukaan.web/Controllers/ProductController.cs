@@ -108,5 +108,16 @@ namespace PehliDukaan.web.Controllers
 
             return RedirectToAction("ProductTable");
         }
+
+        [HttpGet]
+        public ActionResult Details(int ID) {
+            ProductViewModel model = new ProductViewModel();
+
+            model.Product = productsService.GetProduct(ID);
+
+            if (model.Product == null) return HttpNotFound();
+
+            return View(model);
+        }
     }
 }

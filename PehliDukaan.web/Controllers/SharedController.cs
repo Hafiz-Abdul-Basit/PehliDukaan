@@ -26,15 +26,7 @@ namespace PehliDukaan.web.Controllers {
 
                 result.Data = new { Success = true, ImageURL = string.Format("/Content/images/{0}", fileName) };
 
-                //var newImage = new Image() { Name = fileName };
-
-                //if (ImagesService.Instance.SaveNewImage(newImage)) {
-
-                //    result.Data = new { Success = true, Image = fileName, File = newImage.Id, ImageURL = string.Format("{0}{1}", Variables.ImageFolderPath, fileName) };
-                //}
-                //else {
-                //    result.Data = new { Success = false, Message = new HttpStatusCodeResult(500) };
-                //}
+               
             }
             catch (Exception ex) {
                 result.Data = new { Success = false, Message = ex.Message };

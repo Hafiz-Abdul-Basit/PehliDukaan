@@ -13,6 +13,7 @@ using PehliDukaan.Database.DataService;
 
 namespace PehliDukaan.web.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         CategoriesService categoryService = new CategoriesService();

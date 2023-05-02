@@ -17,7 +17,9 @@
   * flatImagePopup
   * flatVideoPopup
   * flatEffectDir
-  * flatIsotope
+  * flat
+  * 
+  * 
   * flatCarouselOwl
   * searchIcon
   * headerFixed

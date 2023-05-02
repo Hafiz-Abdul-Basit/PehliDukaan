@@ -12,6 +12,7 @@ namespace PehliDukaan.web.Models.ViewModels {
         public int PageNo { get; set; }
         public List<Product> Products { get; set; }
         public string SearchItem { get; set; }
+        public Pager Pager { get; set; }
 
     }
 
@@ -40,5 +41,9 @@ namespace PehliDukaan.web.Models.ViewModels {
 
         public string ImageURL { get; set; }
         public List<Category> AvailableCategories { get; set; }
+    }
+
+    public class ProductViewModel {
+        public Product Product { get; set; }
     }
 }

@@ -1179,9 +1179,10 @@ h6 { font-size: 14px; line-height: 48px; font-weight: 400;}
 	margin-left: 15px;
 }
 
-.header-center .menu-extra, 
-.header-style-1 .menu-extra {
+.header-center .menu-extra, .header-style-1 .menu-extra {
 	right: 15px;
+	display: flex;
+	flex-direction: row;
 }
 
 #mainnav >ul {

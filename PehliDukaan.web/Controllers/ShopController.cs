@@ -1,7 +1,9 @@
 ﻿//using PehliDukaan.Services;
+using PehliDukaan.Database.DataService;
 using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,9 +11,32 @@ using System.Web.Mvc;
 
 namespace PehliDukaan.web.Controllers
 {
+
+  
     public class ShopController : Controller
     {
         //ProductsService productsService = new ProductsService();    
+
+        public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy) {
+        
+            ShopViewModel model = new ShopViewModel();
+            ProductsService productsService = new ProductsService();
+            CategoriesService categoriesService = new CategoriesService();
+
+            model.SearchTerm = searchTerm;
+            model.FeaturedCategories = categoriesService.GetFeaturedCategories();
+            model.MaximumPrice = productsService.GetMaximumPrice();
+
+           
+            model.SortBy = sortBy;
+            model.CategoryID = categoryID;
+
+            model.Products = productsService.SearchProducts(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy);
+
+            return View(model);
+        }
+
+
 
         // GET: Shop
         public ActionResult Checkout()
@@ -28,7 +53,6 @@ namespace PehliDukaan.web.Controllers
 
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
 
-                //model.CartProducts = PehliDukaan.Database.DataService.CategoriesService.ClassObject.GetProducts(model.CartProductIDs);
             }
 
             return View(model);
