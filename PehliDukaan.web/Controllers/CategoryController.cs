@@ -92,13 +92,17 @@ namespace PehliDukaan.web.Controllers
         public ActionResult Edit(EditCategoryViewModel model) {
 
     
-                var existingCategory = categoryService.GetCategory(model.Id);
-                existingCategory.Name = model.Name;
-                existingCategory.Description = model.Description;
-                existingCategory.ImageURL = model.ImageURL;
-                existingCategory.isFeatured = model.isFeatured;
+            var existingCategory = categoryService.GetCategory(model.Id);
+            existingCategory.Name = model.Name;
+            existingCategory.Description = model.Description;
+               
+            existingCategory.isFeatured = model.isFeatured;
 
-                categoryService.UpdateCategory(existingCategory);
+            if (!string.IsNullOrEmpty(model.ImageURL)) {
+
+                existingCategory.ImageURL = model.ImageURL;
+            }
+            categoryService.UpdateCategory(existingCategory);
 
                 return RedirectToAction("CategoryTable");
            }

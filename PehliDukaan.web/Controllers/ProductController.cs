@@ -49,7 +49,6 @@ namespace PehliDukaan.web.Controllers
         [HttpPost]
         public ActionResult Create(NewProductViewModel model) {
 
-            if (ModelState.IsValid) {
 
             var newProduct = new Product();
             newProduct.Name = model.Name;
@@ -57,13 +56,10 @@ namespace PehliDukaan.web.Controllers
             newProduct.Price = model.Price;
             newProduct.Category = categoryService.GetCategory(model.CategoryId);
             newProduct.ImageURL = model.ImageURL;
-            productsService.SaveProduct(newProduct);
 
+            productsService.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
-           }
-            else {
-                return new HttpStatusCodeResult(500);
-            }
+
         }
 
         // GET: Category
@@ -87,13 +83,18 @@ namespace PehliDukaan.web.Controllers
 
         [HttpPost]
         public ActionResult Edit(EditProductViewModel model) {
-
             var existingProduct = productsService.GetProduct(model.Id);
             existingProduct.Name = model.Name;
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
-            existingProduct.Category = categoryService.GetCategory(model.CategoryId);
-            existingProduct.ImageURL = model.ImageURL;
+
+            existingProduct.Category = null; //mark it null. Because the reference key is changed below
+            existingProduct.CategoryID = model.CategoryId;
+
+            //don't update imageURL if its empty
+            if (!string.IsNullOrEmpty(model.ImageURL)) {
+                existingProduct.ImageURL = model.ImageURL;
+            }
 
             productsService.UpdateProduct(existingProduct);
 

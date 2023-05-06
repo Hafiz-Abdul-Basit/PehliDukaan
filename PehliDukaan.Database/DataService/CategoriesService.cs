@@ -69,7 +69,9 @@ namespace PehliDukaan.Database.DataService {
 
             using (var context = new PDContext()) {
 
-                var category = context.Categories.Find(Id);
+                var category = context.Categories.Where(x => x.Id == Id).Include(x => x.Products).FirstOrDefault();
+
+                context.Products.RemoveRange(category.Products); //first delete products of this category
                 context.Categories.Remove(category);
                 context.SaveChanges();
             }

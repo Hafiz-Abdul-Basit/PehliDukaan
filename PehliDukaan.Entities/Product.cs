@@ -16,6 +16,8 @@ namespace PehliDukaan.Entities {
         [Range(1, 100000)]
         public decimal Price { get; set; }
 
+        public int CategoryID { get; set; }
+
         public string ImageURL { get; set; }
 
     }

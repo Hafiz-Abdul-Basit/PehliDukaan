@@ -123,7 +123,7 @@ namespace PehliDukaan.Database.DataService {
         public void SaveProduct(Product product) {
 
             using (var context = new PDContext()) {
-                context.Entry(product).State = EntityState.Unchanged;
+                context.Entry(product.Category).State = System.Data.Entity.EntityState.Unchanged;
 
                 context.Products.Add(product);
                 context.SaveChanges();
