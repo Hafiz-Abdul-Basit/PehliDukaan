@@ -39,15 +39,13 @@ namespace PehliDukaan.web.Models
         public bool RememberMe { get; set; }
     }
 
-    public class ForgotViewModel
-    {
+    public class ForgotViewModel {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
-    public class LoginViewModel
-    {
+    public class LoginViewModel {
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
@@ -62,8 +60,15 @@ namespace PehliDukaan.web.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
-    {
+    public class RegisterViewModel {
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -81,8 +86,7 @@ namespace PehliDukaan.web.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ResetPasswordViewModel
-    {
+    public class ResetPasswordViewModel {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -102,8 +106,7 @@ namespace PehliDukaan.web.Models
         public string Code { get; set; }
     }
 
-    public class ForgotPasswordViewModel
-    {
+    public class ForgotPasswordViewModel {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

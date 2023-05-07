@@ -12,6 +12,8 @@ namespace PehliDukaan.web.Models.ViewModels {
 
         public List<int> CartProductIDs { get; set; }
 
+        public ApplicationUser User { get; set; }
+
     }
 
     public class ShopViewModel {
@@ -20,8 +22,6 @@ namespace PehliDukaan.web.Models.ViewModels {
         public List<Product> Products { get; set; }
         public int? SortBy { get; set; }
         public int? CategoryID { get; set; }
-
-        public Pager Pager { get; set; }
         public string SearchTerm { get; set; }
     }
 

@@ -181,6 +181,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305021101092_InitialCreate.cs" />
+    <Compile Include="Migrations\202305021101092_InitialCreate.Designer.cs">
+      <DependentUpon>202305021101092_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305071108103_AddedNewPropertiesToUser.cs" />
+    <Compile Include="Migrations\202305071108103_AddedNewPropertiesToUser.designer.cs">
+      <DependentUpon>202305071108103_AddedNewPropertiesToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\HomeViewModel.cs" />
@@ -297,6 +306,7 @@
     <Content Include="Content\images\pattern\7.png" />
     <Content Include="Content\images\pattern\8.png" />
     <Content Include="Content\images\pattern\9.png" />
+    <Content Include="Content\images\red white shoes sale banner.png" />
     <Content Include="Content\images\shop\s-01.jpg" />
     <Content Include="Content\images\shop\s-02.jpg" />
     <Content Include="Content\images\shop\s-03.jpg" />
@@ -411,6 +421,7 @@
     <Content Include="Content\images\slider\slider-bg-7.jpg" />
     <Content Include="Content\images\slider\slider-bg-8.jpg" />
     <Content Include="Content\images\wordpress-version.png" />
+    <Content Include="Content\images\_.png" />
     <Content Include="Content\javascript\bootstrap.min.js" />
     <Content Include="Content\javascript\equalize.min.js" />
     <Content Include="Content\javascript\gmap3.min.js" />
@@ -575,6 +586,14 @@
       <Project>{3873D63C-2073-4D13-BFEA-0BC2AD79C695}</Project>
       <Name>PehliDukaan.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202305021101092_InitialCreate.resx">
+      <DependentUpon>202305021101092_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305071108103_AddedNewPropertiesToUser.resx">
+      <DependentUpon>202305071108103_AddedNewPropertiesToUser.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

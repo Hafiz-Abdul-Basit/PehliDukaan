@@ -9,7 +9,7 @@
             <li class="active"><a href="#" data-filter="*">All Product</a></li>
 
             @foreach (var category in Model.Products.Select(x => x.Category).ToList().Distinct()) {
-                <li><a href="#" data-filter=".@category.Name.ToLower()">@category.Name</a></li>
+                <li><a href="#" data-filter=".@category.Name.ToLower()">For @category.Name</a></li>
             }
         </ul>
         <div class="divider h54"></div>

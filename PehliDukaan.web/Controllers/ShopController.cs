@@ -1,4 +1,6 @@
 ﻿//using PehliDukaan.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using PehliDukaan.Database.DataService;
 using PehliDukaan.web.Models.ViewModels;
 using System;
@@ -11,17 +13,35 @@ using System.Web.Mvc;
 
 namespace PehliDukaan.web.Controllers
 {
-
-  
     public class ShopController : Controller
     {
-        //ProductsService productsService = new ProductsService();    
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationSignInManager SignInManager {
+            get {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set {
+                _signInManager = value;
+            }
+        }
+        public ApplicationUserManager UserManager {
+            get {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set {
+                _userManager = value;
+            }
+        }
+
+        ProductsService productsService = new ProductsService();
+            CategoriesService categoriesService = new CategoriesService();
+         
 
         public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy) {
         
             ShopViewModel model = new ShopViewModel();
-            ProductsService productsService = new ProductsService();
-            CategoriesService categoriesService = new CategoriesService();
 
             model.SearchTerm = searchTerm;
             model.FeaturedCategories = categoriesService.GetFeaturedCategories();
@@ -39,23 +59,23 @@ namespace PehliDukaan.web.Controllers
 
 
         // GET: Shop
-        public ActionResult Checkout()
-        {
+        [Authorize]
+        public ActionResult Checkout() {
             CheckoutViewModel model = new CheckoutViewModel();
 
             var CartProductsCookie = Request.Cookies["CartProducts"];
 
-            if (CartProductsCookie != null) {
-
-                // var productIDs = CartProductsCookie.Value;
-                //var ids = productIDs.Split('-');
-                //List<int> pIDs = ids.Select(x => int.Parse(x)).ToList();
+            if (CartProductsCookie != null && !string.IsNullOrEmpty(CartProductsCookie.Value)) {
 
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
 
+                model.CartProducts = productsService.GetProducts(model.CartProductIDs);
+
+                //model.User = UserManager.FindById(User.Identity.GetUserId());
             }
 
             return View(model);
         }
+
     }
 }
