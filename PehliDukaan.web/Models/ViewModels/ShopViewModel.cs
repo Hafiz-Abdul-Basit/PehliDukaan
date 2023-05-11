@@ -14,6 +14,8 @@ namespace PehliDukaan.web.Models.ViewModels {
 
         public ApplicationUser User { get; set; }
 
+        public int Quantity { get; set; }
+
     }
 
     public class ShopViewModel {

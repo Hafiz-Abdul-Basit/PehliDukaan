@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PehliDukaan.Database.DataService;
+using PehliDukaan.Entities;
 using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,13 @@ namespace PehliDukaan.web.Controllers
                 _userManager = value;
             }
         }
+        public ActionResult Cart() {
+            return View();
+        }
 
         ProductsService productsService = new ProductsService();
-            CategoriesService categoriesService = new CategoriesService();
+        CategoriesService categoriesService = new CategoriesService();
+        ShopService shopService = new ShopService();
          
 
         public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy) {
@@ -56,10 +61,30 @@ namespace PehliDukaan.web.Controllers
             return View(model);
         }
 
+        //[Authorize]
+        public ActionResult AddToCart() {
+            CheckoutViewModel model = new CheckoutViewModel();
+
+            var CartProductsCookie = Request.Cookies["CartProducts"];
+
+            if (CartProductsCookie != null && !string.IsNullOrEmpty(CartProductsCookie.Value)) {
+
+                model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+
+                model.CartProducts = productsService.GetProducts(model.CartProductIDs);
+
+                model.Quantity = model.CartProductIDs.Count;
+
+                model.User = UserManager.FindById(User.Identity.GetUserId());
+            }
+
+            return View(model);
+        }
 
 
-        // GET: Shop
-        [Authorize]
+
+            // GET: Shop
+            [Authorize]
         public ActionResult Checkout() {
             CheckoutViewModel model = new CheckoutViewModel();
 
@@ -71,10 +96,39 @@ namespace PehliDukaan.web.Controllers
 
                 model.CartProducts = productsService.GetProducts(model.CartProductIDs);
 
-                //model.User = UserManager.FindById(User.Identity.GetUserId());
+                model.User = UserManager.FindById(User.Identity.GetUserId());
             }
 
             return View(model);
+        }
+
+        public JsonResult PlaceOrder(string productIDs) {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            if (!string.IsNullOrEmpty(productIDs)) {
+                var productQuantities = productIDs.Split('-').Select(x => int.Parse(x)).ToList();
+
+                var boughtProducts = productsService.GetProducts(productQuantities.Distinct().ToList());
+
+                Order newOrder = new Order();
+                newOrder.UserId = User.Identity.GetUserId();
+                newOrder.OrderedAt = DateTime.Now;
+                newOrder.Status = "Pending";
+                newOrder.TotalAmount = boughtProducts.Sum(x => x.Price * productQuantities.Where(productID => productID == x.Id).Count());
+
+                newOrder.Items = new List<OrderItem>();
+                newOrder.Items.AddRange(boughtProducts.Select(x => new OrderItem() { ProductId = x.Id, Quantity = productQuantities.Where(productID => productID == x.Id).Count() }));
+
+                var rowsEffected = shopService.SaveOrder(newOrder);
+
+                result.Data = new { Success = true, Rows = rowsEffected };
+            }
+            else {
+                result.Data = new { Success = false };
+            }
+
+            return result;
         }
 
     }

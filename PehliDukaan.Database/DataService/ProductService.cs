@@ -139,6 +139,7 @@ namespace PehliDukaan.Database.DataService {
             }
         }
 
+
         public void DeleteProduct(int Id) {
 
             using (var context = new PDContext()) {
@@ -148,8 +149,6 @@ namespace PehliDukaan.Database.DataService {
                 context.SaveChanges();
             }
         }
-
-
 
     }
 }

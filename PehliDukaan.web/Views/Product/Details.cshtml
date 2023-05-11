@@ -89,7 +89,7 @@
                                         <span class="dec quantity-button">-</span>
                                     </div>
                                     <div class="add-to-cart">
-                                        <a href="#">ADD TO CART</a>
+                                        <a class="productAddToCart" data-id="@Model.Product.Id">ADD TO CART</a>
                                     </div>
                                     <div class="box-like">
                                         <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
@@ -228,3 +228,30 @@
     </section>
 
 }
+
+<script>
+
+    var products;
+    $(".productAddToCart").click(function () {
+        var existingCookieData = $.cookie('CartProducts');
+
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+            products = existingCookieData.split('-');
+        }
+        else {
+            products = [];
+        }
+
+        var productID = $(this).attr('data-id');
+
+        products.push(productID);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        updateCartProducts();
+
+        swal("Done", "Product Added to Cart!", "success");
+    });
+
+
+</script>
