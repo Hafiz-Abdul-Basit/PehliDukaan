@@ -123,26 +123,41 @@
 
 <script>
 
-    var products;
-    $(".productAddToCart").click(function () {
-        var existingCookieData = $.cookie('CartProducts');
+    const productAddToCartClass = ".productAddToCart";
+    const ProductCartCookieName = "CartProducts";
 
-        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
-            products = existingCookieData.split('-');
+    var products;
+    $(productAddToCartClass).click(function () {
+        const $t = $(this);
+        const productId = parseInt($t.attr('data-id'));
+
+        const cartItems = getCookieJsonItems(ProductCartCookieName) ?? [];
+
+        const existingProduct = findFromObject(cartItems, item => item.id === productId);
+        if (!existingProduct) {
+            addItemInObject(cartItems, { "id": productId, "quantity": 1 });
         }
         else {
-            products = [];
+            existingProduct.quantity++;
+            //updateFromObject(cartItems, existingProduct, item => item.id === productId);
         }
 
-        var productID = $(this).attr('data-id');
+        addCookieJsonItems(cartItems, ProductCartCookieName);
+        console.log({ cartItems });
 
-        products.push(productID);
+        //for (const item of cartItems) {
+        //    console.log(item);
+        //}
 
-        $.cookie('CartProducts', products.join('-'), { path: '/' });
+        //var productID = $(this).attr('data-id');
 
-        updateCartProducts();
+        //products.push(productID);
 
-        swal("Done", "Product Added to Cart!", "success");
+        //$.cookie(ProductCartCookieName, products.join('-'), { path: '/' });
+
+        //updateCartProducts();
+
+        //swal("Done", "Product Added to Cart!", "success");
     });
 
 

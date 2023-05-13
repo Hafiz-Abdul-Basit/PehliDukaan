@@ -6,8 +6,11 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
+using PehliDukaan.Database;
+using PehliDukaan.Services.Models.Responses;
+using PehliDukaan.Services.Models;
 
-namespace PehliDukaan.Database.DataService {
+namespace PehliDukaan.Services {
     public class ProductsService {
 
         #region Singleton
@@ -82,13 +85,29 @@ namespace PehliDukaan.Database.DataService {
             }
         }
 
-        public List<Product> GetProducts(List<int> IDs) {
+        public IEnumerable<Product> GetProducts(IEnumerable<int> IDs) {
 
             using (var context = new PDContext()) {
                 return context.Products.Where(product => IDs.Contains(product.Id)).ToList();
             }
         }
+        public IEnumerable<CartProductResponse> GetCartProducts(IEnumerable<ProductCartCookie> cartItems) {
 
+            using (var context = new PDContext()) {
+                var ids = cartItems.Select(x => x.Id);
+                var entities = context.Products.Where(product => ids.Contains(product.Id)).ToList();
+                return entities.Select(x => new Models.Responses.CartProductResponse() {
+                    CategoryID = x.CategoryID,
+                    ImageURL = x.ImageURL,
+                    Price = x.Price,
+                    Id = x.Id,
+                    Description = x.Description,
+                    Name = x.Name,
+                    Quantity = cartItems.First(y => y.Id == x.Id).Quantity,
+                });
+            }
+
+        }
         public List<Product> GetProducts() {
            
 

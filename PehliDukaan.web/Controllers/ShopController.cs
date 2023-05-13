@@ -1,7 +1,7 @@
 ﻿//using PehliDukaan.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using PehliDukaan.Database.DataService;
+using PehliDukaan.Services;
 using PehliDukaan.Entities;
 using PehliDukaan.web.Models.ViewModels;
 using System;
@@ -10,7 +10,8 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Newtonsoft.Json;
+using PehliDukaan.Services.Models;
 
 namespace PehliDukaan.web.Controllers
 {
@@ -34,9 +35,6 @@ namespace PehliDukaan.web.Controllers
             private set {
                 _userManager = value;
             }
-        }
-        public ActionResult Cart() {
-            return View();
         }
 
         ProductsService productsService = new ProductsService();
@@ -65,39 +63,33 @@ namespace PehliDukaan.web.Controllers
         public ActionResult AddToCart() {
             CheckoutViewModel model = new CheckoutViewModel();
 
-            var CartProductsCookie = Request.Cookies["CartProducts"];
+            var CartProductsCookie = HttpUtility.UrlDecode(Request.Cookies["CartProducts"].Value);
+            IEnumerable<ProductCartCookie> cartItems = JsonConvert.DeserializeObject<IEnumerable<ProductCartCookie>>(CartProductsCookie);
 
-            if (CartProductsCookie != null && !string.IsNullOrEmpty(CartProductsCookie.Value)) {
-
-                model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-
-                model.CartProducts = productsService.GetProducts(model.CartProductIDs);
-
-                model.Quantity = model.CartProductIDs.Count;
-
-                model.User = UserManager.FindById(User.Identity.GetUserId());
+            if (cartItems == null || cartItems.Any() == false) {
+                return View(model);
             }
+
+            model.CartProducts = productsService.GetCartProducts(cartItems);
+            model.User = UserManager.FindById(User.Identity.GetUserId());
 
             return View(model);
         }
 
-
-
-            // GET: Shop
-            [Authorize]
+        // GET: Shop
+        [Authorize]
         public ActionResult Checkout() {
             CheckoutViewModel model = new CheckoutViewModel();
 
             var CartProductsCookie = Request.Cookies["CartProducts"];
+            IEnumerable<ProductCartCookie> cartItems = JsonConvert.DeserializeObject<IEnumerable<ProductCartCookie>>(CartProductsCookie.Value);
 
-            if (CartProductsCookie != null && !string.IsNullOrEmpty(CartProductsCookie.Value)) {
-
-                model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-
-                model.CartProducts = productsService.GetProducts(model.CartProductIDs);
-
-                model.User = UserManager.FindById(User.Identity.GetUserId());
+            if (cartItems == null || cartItems.Any() == false) {
+                return View(model);
             }
+
+            model.CartProducts = productsService.GetCartProducts(cartItems);
+            model.User = UserManager.FindById(User.Identity.GetUserId());
 
             return View(model);
         }

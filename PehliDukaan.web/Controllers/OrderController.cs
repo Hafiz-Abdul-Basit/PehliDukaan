@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using PehliDukaan.Database.DataService;
+using PehliDukaan.Services;
 using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;

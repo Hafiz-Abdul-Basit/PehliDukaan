@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PehliDukaan.Entities", "Peh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PehliDukaan.web", "PehliDukaan.web\PehliDukaan.web.csproj", "{87F82BEB-83A8-4A52-B639-8812A475912E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PehliDukaan.Services", "PehliDukaan.Services\PehliDukaan.Services.csproj", "{5EB01ED4-B027-49ED-9468-ABB84A8AAC4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{87F82BEB-83A8-4A52-B639-8812A475912E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87F82BEB-83A8-4A52-B639-8812A475912E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87F82BEB-83A8-4A52-B639-8812A475912E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB01ED4-B027-49ED-9468-ABB84A8AAC4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB01ED4-B027-49ED-9468-ABB84A8AAC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB01ED4-B027-49ED-9468-ABB84A8AAC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB01ED4-B027-49ED-9468-ABB84A8AAC4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

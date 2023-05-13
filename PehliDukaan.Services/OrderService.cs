@@ -5,8 +5,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PehliDukaan.Database;
 
-namespace PehliDukaan.Database.DataService {
+
+namespace PehliDukaan.Services {
     public class OrderService {
 
         public List<Order> SearchOrders(string userID, string status) {

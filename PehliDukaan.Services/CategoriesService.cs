@@ -1,4 +1,5 @@
-﻿using PehliDukaan.Entities;
+﻿using PehliDukaan.Database;
+using PehliDukaan.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
-namespace PehliDukaan.Database.DataService {
+namespace PehliDukaan.Services {
     public class CategoriesService {
 
         //public static CategoriesService ClassObject {

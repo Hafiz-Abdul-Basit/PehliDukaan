@@ -503,6 +503,8 @@
     <Content Include="Content\rev-slider\fonts\revicons\revicons90c6.ttf" />
     <Content Include="Content\rev-slider\fonts\revicons\revicons90c6.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\collectionHelper.js" />
+    <Content Include="Scripts\cookieService.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -583,13 +585,13 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PehliDukaan.Database\PehliDukaan.Database.csproj">
-      <Project>{81151784-e14f-45fa-82c6-baa091408288}</Project>
-      <Name>PehliDukaan.Database</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PehliDukaan.Entities\PehliDukaan.Entities.csproj">
       <Project>{3873D63C-2073-4D13-BFEA-0BC2AD79C695}</Project>
       <Name>PehliDukaan.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PehliDukaan.Services\PehliDukaan.Services.csproj">
+      <Project>{5eb01ed4-b027-49ed-9468-abb84a8aac4c}</Project>
+      <Name>PehliDukaan.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

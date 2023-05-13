@@ -1,14 +1,11 @@
-﻿//using PehliDukaan.Entities;
+﻿using PehliDukaan.Services;
 using PehliDukaan.Entities;
-//using PehliDukaan.Services;
 using PehliDukaan.web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PehliDukaan.Database.DataService;
-
 
 
 namespace PehliDukaan.web.Controllers
