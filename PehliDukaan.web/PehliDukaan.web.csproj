@@ -172,6 +172,7 @@
     <Compile Include="Code\Enums.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -182,19 +183,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305021101092_InitialCreate.cs" />
-    <Compile Include="Migrations\202305021101092_InitialCreate.Designer.cs">
-      <DependentUpon>202305021101092_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305071108103_AddedNewPropertiesToUser.cs" />
-    <Compile Include="Migrations\202305071108103_AddedNewPropertiesToUser.designer.cs">
-      <DependentUpon>202305071108103_AddedNewPropertiesToUser.cs</DependentUpon>
+    <Compile Include="Migrations\202305161237215_roles.cs" />
+    <Compile Include="Migrations\202305161237215_roles.designer.cs">
+      <DependentUpon>202305161237215_roles.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
-    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
+    <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\NewProductViewModel.cs" />
     <Compile Include="Models\ViewModels\OrdersViewModel.cs" />
@@ -444,6 +442,7 @@
     <Content Include="Content\javascript\owl.carousel.min.js" />
     <Content Include="Content\javascript\parallax.js" />
     <Content Include="Content\javascript\rev-slider.js" />
+    <Content Include="Content\javascript\scripts.js" />
     <Content Include="Content\javascript\switcher.js" />
     <Content Include="Content\javascript\tether.min.js" />
     <Content Include="Content\rev-slider\assets\coloredbg.png" />
@@ -473,6 +472,7 @@
     <Content Include="Content\stylesheets\colors\color2.css" />
     <Content Include="Content\stylesheets\colors\color3.css" />
     <Content Include="Content\stylesheets\colors\color4.css" />
+    <Content Include="Content\stylesheets\dashboard.css" />
     <Content Include="Content\stylesheets\flexslider.css" />
     <Content Include="Content\stylesheets\font-awesome.css" />
     <Content Include="Content\stylesheets\jquery-ui.css" />
@@ -565,6 +565,14 @@
     <Content Include="Views\Shop\AddToCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\Shared\_NavMenu.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_DashboardLayout.cshtml" />
+    <Content Include="Views\Dashboard\Users.cshtml" />
+    <Content Include="Views\Dashboard\UsersListing.cshtml" />
+    <Content Include="Views\Dashboard\RolesListing.cshtml" />
+    <Content Include="Views\Dashboard\Roles.cshtml" />
+    <Content Include="Views\Dashboard\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -585,6 +593,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PehliDukaan.Database\PehliDukaan.Database.csproj">
+      <Project>{81151784-E14F-45FA-82C6-BAA091408288}</Project>
+      <Name>PehliDukaan.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PehliDukaan.Entities\PehliDukaan.Entities.csproj">
       <Project>{3873D63C-2073-4D13-BFEA-0BC2AD79C695}</Project>
       <Name>PehliDukaan.Entities</Name>
@@ -595,11 +607,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305021101092_InitialCreate.resx">
-      <DependentUpon>202305021101092_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305071108103_AddedNewPropertiesToUser.resx">
-      <DependentUpon>202305071108103_AddedNewPropertiesToUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202305161237215_roles.resx">
+      <DependentUpon>202305161237215_roles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

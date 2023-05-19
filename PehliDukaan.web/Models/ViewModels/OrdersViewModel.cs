@@ -16,6 +16,6 @@ namespace PehliDukaan.web.Models.ViewModels {
     public class OrderDetailsViewModel {
         public List<string> AvailableStatuses { get; set; }
         public Order Order { get; set; }
-        public ApplicationUser OrderBy { get; set; }
+        public PehliDukaanUser OrderBy { get; set; }
     }
 }

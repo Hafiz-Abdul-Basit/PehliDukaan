@@ -1,0 +1,60 @@
+﻿@model PehliDukaan.web.Models.ViewModels.UsersListingViewModel
+
+
+    <table class="table table-striped">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th class="font-weight-bold">Name</th>
+                <th class="font-weight-bold">Username</th>
+                <th class="font-weight-bold">Email</th>
+                <th class="font-weight-bold">Roles</th>
+                <th class="font-weight-bold">Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                @if (Model.Users != null && Model.Users.Count > 0) {
+
+                    foreach (var user in Model.Users) {
+                        <tr>
+                            <input type="hidden" value="@user.Id" />
+                            <td>@user.Name</td>
+                            <td>
+                                @user.UserName
+                            </td>
+                            <td>@user.Email</td>
+                            <td>@user.Roles.Count</td>
+                            <td>
+                                <a href="@Url.Action("UserDetails", "Dashboard", new {userID = user.Id})" class="moreDetailBtn btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                    More Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else {
+                    <tr>
+                        <td class="text-danger" colspan="12">No Results Found.</td>
+                    </tr>
+                }
+            </tbody>
+    </table>
+
+<script>
+
+    $(".moreDetailBtn").click(function () {
+    //    $.ajax({
+
+    //        url: '/Category/Create',
+    //    })
+    //        .done(function (response) {
+    //            $("#actionContainer").html(response);
+    //            focusAction("actionContainer");
+    //        })
+    //        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+    //            alert("FAIL");
+
+    //        });
+    });
+</script>

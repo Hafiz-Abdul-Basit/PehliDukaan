@@ -1,0 +1,81 @@
+﻿<style>
+    .header-center .menu-extra, .header-style-1 .menu-extra {
+        right: 15px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+</style>
+
+
+<div id="site-header-wrap">
+    <!-- Header -->
+    <header id="header" class="header clearfix">
+        <div class="container-fluid clearfix container-width-93" id="site-header-inner">
+            <div id="logo" class="logo float-left">
+                <a href="index.html" title="logo">
+                    <a href="/"><img src="~/Content/images/ECOM-LOGO.png" alt="image" width="220" height="45"></a>
+                </a>
+            </div><!-- /.logo -->
+            <div class="mobile-button"><span></span></div>
+            <ul class="menu-extra">
+
+                @*@if (User.Identity.IsAuthenticated) {
+
+        }*@
+
+
+
+
+
+                @if (User.Identity.IsAuthenticated) {
+                    if (User.IsInRole("Administrator")) {
+                        <a class="btn btn-block ml-3" href="@Url.Action("Index","Dashboard")">Dashboard</a>
+
+                    }
+                    <a class="btn btn-block ml-3" href="#" id="btnLogOff">LogOut</a>
+
+                }
+                else {
+                    <a class="btn btn-block ml-3" href="@Url.Action("Login","Account")">Login</a>
+                }
+
+
+                <li class="box-cart nav-top-cart-wrapper">
+                    <a class="icon_cart nav-cart-trigger active" href="@Url.Action("AddToCart", "Shop")"><span id="cartProductsCount">0</span></a>
+                </li>
+
+            </ul><!-- /.menu-extra -->
+
+            <div class="nav-wrap">
+                <nav id="mainnav" class="mainnav">
+                    <ul class="menu">
+                        <li>
+                            <a href="@Url.Action("Index", "Home")">Home</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Shop")">Categories</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Shop")">All Products</a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("Checkout", "Shop")">Contact Us</a>
+                        </li>
+                    </ul>
+                </nav><!-- /.mainnav -->
+            </div><!-- /.nav-wrap -->
+
+        </div><!-- /.container-fluid -->
+    </header><!-- /header -->
+</div><!-- /.site-header-wrap -->
+<form id="logOffForm" method="post" action="@Url.Action("LogOff","Account")">
+    @Html.AntiForgeryToken()
+</form>
+
+<script>
+    $('#btnLogOff').click(function () {
+        $("#logOffForm").submit();
+    });
+</script>

@@ -1,4 +1,5 @@
-﻿using PehliDukaan.Entities;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using PehliDukaan.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace PehliDukaan.Database {
 
-    public class PDContext : DbContext, IDisposable {
+    public class PDContext : IdentityDbContext<PehliDukaanUser> ,IDisposable {
 
         public PDContext() : base("PehliDukaanConnection")
         {
-            
+            System.Data.Entity.Database.SetInitializer<PDContext>(new PehliDukaanDBInitializer());
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -22,6 +23,8 @@ namespace PehliDukaan.Database {
         public DbSet<OrderItem> OrderItems { get; set; }
 
 
-
+        public static PDContext Create() {
+            return new PDContext();
+        }
     }
 }

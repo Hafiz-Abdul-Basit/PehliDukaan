@@ -1,0 +1,81 @@
+﻿@model PehliDukaan.web.Models.ViewModels.UsersViewModel
+
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var roleID = string.IsNullOrEmpty(Model.RoleID) ? Model.RoleID : string.Empty;
+
+}
+
+<section class="flat-row flat-iconbox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section">
+                    <h2 class="title">
+                        Users
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="tableContiner">
+
+
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Search</label>
+                            <input class="form-control" id="searchTxt" name="searchTerm" value="@Model.SearchTerm" />
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <div class="row">
+                                <div class="col-md-3 pr-0">
+                                    <button class="btn btn-primary form-control" type="submit" id="searchBtn">Search</button>
+                                </div>
+                                <div class="col-md-3 pr-0">
+                                    <a class="btn btn-primary form-control" type="button" id="resetBtn" href="@Url.Action("Users", "Dashboard")">Reset</a>
+                                </div>
+                                <div class="col-md-5 pr-0">
+                                    <select class="form-control custom-select" name="roleID">
+                                        <option>Select Role..</option>
+                                        @foreach (var role in Model.Roles) {
+
+                                            var selected = role.Id == roleID ? "selected" : string.Empty;
+                                            <option value="@role.Id" @selected>@role.Name</option>
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+       
+
+
+        <div class="col-lg-12 m-0 p-0" id="UserListing">
+            @{ Html.RenderAction("UsersListing", new { roleID = Model.RoleID, searchTerm = Model.SearchTerm });}
+        </div>
+
+
+    </div>
+
+        <hr />
+    </div>
+</section>
+
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>

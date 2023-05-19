@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PehliDukaan.Services;
 using PehliDukaan.web.Models;
 
 namespace PehliDukaan.web.Controllers
@@ -13,24 +14,24 @@ namespace PehliDukaan.web.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private PDSignInManager _signInManager;
+        private PDUserManager _userManager;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(PDUserManager userManager, PDSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public PDSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<PDSignInManager>();
             }
             private set 
             { 
@@ -38,11 +39,11 @@ namespace PehliDukaan.web.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public PDUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<PDUserManager>();
             }
             private set
             {

@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <!-- Basic Page Needs -->
@@ -45,72 +44,8 @@
 
     <!-- Boxed -->
     <div class="boxed">
-        <div id="site-header-wrap">
-            <!-- Header -->
-            <header id="header" class="header clearfix">
-                <div class="container-fluid clearfix container-width-93" id="site-header-inner">
-                    <div id="logo" class="logo float-left">
-                        <a href="index.html" title="logo">
-                            <a href="/"><img src="~/Content/images/ECOM-LOGO.png" alt="image" width="220" height="45"></a>
-                        </a>
-                    </div><!-- /.logo -->
-                    <div class="mobile-button"><span></span></div>
-                    <ul class="menu-extra">
-                        <li class="box-search">
-                            <a class="icon_search header-search-icon" href="#"></a>
-                            <form role="search" method="get" class="header-search-form" action="#">
-                                <input type="text" value="" name="s" class="header-search-field" placeholder="Search...">
-                                <button type="submit" class="header-search-submit" title="Search">Search</button>
-                            </form>
-                        </li>
-                        @if (User.Identity.IsAuthenticated) {
-                            <li class="box-login">
-                                <a class="icon_login" href="#">
-                                    @User.Identity.Name
-                                </a>
-                            </li>
-                        }
-
-                        <li class="box-cart nav-top-cart-wrapper">
-                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("Checkout", "Shop")"><span id="cartProductsCount">0</span></a>
-                        </li>
-
-                        <li class="box-login box-cart nav-top-cart-wrapper">
-                            <a class="icon_login nav-cart-trigger active" href="#"></a>
-                            <div class="nav-shop-cart">
-                                <div class="widget_shopping_cart_content">
-                                    <div class="woocommerce-min-cart-wrap">
-                                        <ul class="menu">
-                                            <li>
-                                                <a href="/">HOME</a>
-                                            </li>
-                                        </ul>
-                                    </div><!-- /.widget_shopping_cart_content -->
-                                </div>
-                            </div><!-- /.nav-shop-cart -->
-                        </li>
-
-                    </ul><!-- /.menu-extra -->
-
-                    <div class="nav-wrap">
-                        <nav id="mainnav" class="mainnav">
-                            <ul class="menu">
-                                <li>
-                                    <a href="@Url.Action("Index", "Home")">HOME</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Shop")">SHOP</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Checkout", "Shop")">CHECKOUT</a>
-                                </li>
-                            </ul>
-                        </nav><!-- /.mainnav -->
-                    </div><!-- /.nav-wrap -->
-
-                </div><!-- /.container-fluid -->
-            </header><!-- /header -->
-        </div><!-- /.site-header-wrap -->
+      
+        @{Html.RenderPartial("_NavMenu");}
 
         @RenderBody()
 
@@ -138,17 +73,17 @@
                             <ul class="flat-social">
 
 
-                                <li><a href="@ConfigurationsService.ClassObject.GetConfig("FacebookURL").Value"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href=""><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-google"></i></a></li>
                                 <li><a href="#"><i class="fa fa-behance"></i></a></li>
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            </ul><!-- /.flat-social -->
-                        </div><!-- /.subscribe -->
+                            </ul> /.flat-social 
+                        </div> /.subscribe 
                     </div>
                 </div>
             </div>
-        </section><!-- /.mail-chimp -->
+        </section> 
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
@@ -189,8 +124,8 @@
                                 <a href="index.html"><img src="~/Content/images/ECOM-LOGO.png" alt="image" width="220" height="45"></a>
                             </div>
                             <ul class="flat-contact">
-                                <li class="address">@ConfigurationsService.ClassObject.GetConfig("CompanyAddress").Value</li>
-                                <li class="phone">@ConfigurationsService.ClassObject.GetConfig("CompanyPhone").Value</li>
+                                <li class="address">abc karachi, Pakistan</li>
+                                <li class="phone">+9212-235235</li>
                                 <li class="email">infor.deercreative@gmail.com</li>
                             </ul><!-- /.flat-contact -->
                         </div><!-- /.widget -->
@@ -258,6 +193,5 @@
 
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 </body>
 </html>

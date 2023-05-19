@@ -1183,6 +1183,7 @@ h6 { font-size: 14px; line-height: 48px; font-weight: 400;}
 	right: 15px;
 	display: flex;
 	flex-direction: row;
+	align-items: center !important;
 }
 
 #mainnav >ul {

@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PehliDukaan.Entities;
+using PehliDukaan.Services;
 using PehliDukaan.web.Models;
 
 namespace PehliDukaan.web.Controllers
@@ -15,24 +17,24 @@ namespace PehliDukaan.web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private PDSignInManager _signInManager;
+        private PDUserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(PDUserManager userManager, PDSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public PDSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<PDSignInManager>();
             }
             private set 
             { 
@@ -40,11 +42,11 @@ namespace PehliDukaan.web.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public PDUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<PDUserManager>();
             }
             private set
             {
@@ -75,7 +77,7 @@ namespace PehliDukaan.web.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,10 +153,14 @@ namespace PehliDukaan.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Address = model.Address };
+                var user = new PehliDukaanUser { UserName = model.Username, Email = model.Email, Name = model.Name, Address = model.Address };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //assign a role to user
+                    await UserManager.AddToRoleAsync(user.Id, "User");
+
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -367,7 +373,7 @@ namespace PehliDukaan.web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new PehliDukaanUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

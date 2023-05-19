@@ -1,0 +1,19 @@
+﻿@model PehliDukaan.web.Models.ViewModels.UserDetailsViewModel
+@{
+    ViewBag.Title = "UserDetails";
+}
+
+@if (Model != null && Model.User != null) {
+
+
+
+    <h2>@Model.User.UserName</h2>
+
+}
+
+else {
+
+    <div class="alert alert-warning" role="alert">
+        No User Found.
+    </div>
+}

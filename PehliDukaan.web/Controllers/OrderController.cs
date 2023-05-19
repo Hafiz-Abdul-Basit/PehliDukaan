@@ -12,20 +12,20 @@ namespace PehliDukaan.web.Controllers
 {
     public class OrderController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private PDSignInManager _signInManager;
+        private PDUserManager _userManager;
 
-        public ApplicationSignInManager SignInManager {
+        public PDSignInManager SignInManager {
             get {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<PDSignInManager>();
             }
             private set {
                 _signInManager = value;
             }
         }
-        public ApplicationUserManager UserManager {
+        public PDUserManager UserManager {
             get {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<PDUserManager>();
             }
             private set {
                 _userManager = value;

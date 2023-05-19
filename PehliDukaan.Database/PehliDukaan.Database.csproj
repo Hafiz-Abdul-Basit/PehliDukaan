@@ -40,6 +40,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Build.Framework, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Build.Framework.17.5.0\lib\net472\Microsoft.Build.Framework.dll</HintPath>
     </Reference>
@@ -94,8 +100,13 @@
     <Compile Include="Migrations\202305111042011_AddQuantity.designer.cs">
       <DependentUpon>202305111042011_AddQuantity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305161155591_rolesAdded.cs" />
+    <Compile Include="Migrations\202305161155591_rolesAdded.designer.cs">
+      <DependentUpon>202305161155591_rolesAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PDContext.cs" />
+    <Compile Include="PehliDukaanDBInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305111042011_AddQuantity.resx">
       <DependentUpon>202305111042011_AddQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305161155591_rolesAdded.resx">
+      <DependentUpon>202305161155591_rolesAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

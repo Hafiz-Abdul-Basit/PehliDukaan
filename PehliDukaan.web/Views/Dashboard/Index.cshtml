@@ -1,0 +1,49 @@
+﻿@model PehliDukaan.web.Models.ViewModels.DashboardViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="jumbotron mt-5">
+    <div class="container">
+        <h1 class="display-4 mb-3">Hello, @User.Identity.Name</h1>
+        <p class="lead">
+            Welcome to PehliDukaan Dashboard, Below are the few demographics of PehliDukaan
+        </p>
+    </div>
+</div>
+
+
+<div class="card-deck text-primary">
+    <div class="card text-center">
+
+        <h5 class="card-title display-2 align-middle">@Model.CategoriesCount</h5>
+
+
+        <div class="card-footer display-5 font-weight-bold">
+            <a href="@Url.Action("Index", "Category")">Categories</a>
+        </div>
+
+    </div>
+    <div class="card text-center">
+
+        <h5 class="card-title display-2 align-middle">@Model.ProductsCount</h5>
+
+
+        <div class="card-footer display-5 font-weight-bold">
+            <a href="@Url.Action("Index", "Product")">Products</a>
+        </div>
+
+    </div>
+    <div class="card text-center">
+
+        <h5 class="card-title display-2 align-middle">@Model.OrdersCount</h5>
+
+
+        <div class="card-footer display-5 font-weight-bold">
+            <a href="@Url.Action("Index", "Order")">Orders</a>
+        </div>
+
+    </div>
+</div>

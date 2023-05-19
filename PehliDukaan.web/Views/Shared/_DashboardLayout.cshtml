@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>PehliDukaan Dashboard</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="~/Content/stylesheets/dashboard.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Bootstrap  -->
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/stylesheets/bootstrap.css">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" type="text/css" href="~/Content/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/stylesheets/responsive.css">
+
+    <!-- Colors -->
+    <link rel="stylesheet" type="text/css" href="~/Content/stylesheets/colors/color1.css" id="colors">
+
+    <!-- Animation Style -->
+    <link rel="stylesheet" type="text/css" href="~/Content/stylesheets/animate.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <!-- Core theme CSS (includes Bootstrap)-->
+
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <a class="m-5" href="index.html"><img src="~/Content/images/ECOM-LOGO.png" alt="image" width="160" height="75"></a>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/"><i class="fa-solid fa-house mr-3"></i>Home</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Dashboard")"><i class="fa-solid fa-user-shield mr-3"></i>Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Category")"><i class="fa-sharp fa-solid fa-users mr-3"></i>Categories</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Product")"><i class="fa-brands fa-product-hunt mr-3"></i>Products</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Order")"><i class="fa-solid fa-truck mr-3"></i>Orders</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Users","Dashboard")"><i class="fa-solid fa-user-plus mr-3"></i>Users</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Roles","Dashboard")"><i class="fa-solid fa-user-group mr-3"></i>Roles</a>
+
+            </div>
+        </div>
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+                    <span>Hi @User.Identity.Name</span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item active"><a class="nav-link" href="#!">Log Out</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Page content-->
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="~/Content/javascript/scripts.js"></script>
+    <!-- Core theme JS-->
+    <!-- Javascript -->
+
+
+
+    <script src="~/Content/javascript/jquery.cookie.js"></script>
+    <script src="~/Scripts/cookieService.js"></script>
+    <script src="~/Scripts/collectionHelper.js"></script>
+    @*<script src="~/Content/javascript/main.js"></script>*@
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+</html>
