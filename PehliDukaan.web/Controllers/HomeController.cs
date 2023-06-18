@@ -45,7 +45,7 @@ namespace PehliDukaan.web.Controllers {
         }
 
         [HttpPost]
-    
+
         public ActionResult ContactForm(string email, string subject, string message) {
             try {
                 if (ModelState.IsValid) {
@@ -64,7 +64,7 @@ namespace PehliDukaan.web.Controllers {
                         Credentials = new NetworkCredential(senderEmail.Address, password)
                     };
 
-                    using (var mess = new MailMessage(receiverEmail,senderEmail ) {
+                    using (var mess = new MailMessage(receiverEmail, senderEmail) {
                         Subject = sub,
                         Body = body
                     }) {
@@ -82,3 +82,4 @@ namespace PehliDukaan.web.Controllers {
             return View();
         }
     }
+}
