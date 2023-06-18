@@ -1,0 +1,87 @@
+﻿@model OrdersViewModel
+
+@{
+    ViewBag.Title = "UserProfileDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<section class="flat-row flat-iconbox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section">
+                    <h2 class="title">
+                        Your Orders
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="tableContiner">
+
+          
+
+            <div>
+                <table id="OrdersTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="font-weight-bold">User ID</th>
+                            <th class="font-weight-bold">Date Time</th>
+                            <th class="font-weight-bold">Total Price</th>
+                            <th class="font-weight-bold">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Orders != null && Model.Orders.Count > 0) {
+
+                            foreach (var order in Model.Orders) {
+                                <tr>
+                                    <td>@order.UserId</td>
+                                    <td>@order.OrderedAt</td>
+
+                                    <td>
+                                        @order.TotalAmount
+                                    </td>
+                                    <td>
+                                        @if (order.Status == "Pending") {
+                                            <span class="badge badge-warning">@order.Status</span>
+                                        }
+                                        else if (order.Status == "In Progress") {
+                                            <span class="badge badge-info">@order.Status</span>
+                                        }
+                                        else if (order.Status == "Delivered") {
+                                            <span class="badge badge-success">@order.Status</span>
+                                        }
+                                        else {
+                                            <span class="badge">@order.Status</span>
+                                        }
+                                    </td>
+                                    <td class="wrap-td">
+                                        <a class="detailBtn btn btn-primary mr-2" data-id="@order.Id" href="@Url.Action("Details", "Order", new { ID = order.Id })">Details</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else {
+                            <tr>
+                                <td class="text-danger" colspan="4">No Order found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr />
+    </div>
+</section>
+
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>

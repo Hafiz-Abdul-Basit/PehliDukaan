@@ -5,20 +5,17 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<div class="jumbotron mt-5">
-    <div class="container">
-        <h1 class="display-4 mb-3">Hello, @User.Identity.Name</h1>
-        <p class="lead">
-            Welcome to PehliDukaan Dashboard, Below are the few demographics of PehliDukaan
-        </p>
+
+    <div class="container-fluid mt-lg-5 mb-lg-5" >
+       <img class="dash-banner" src="~/Content/images/Dark Blue Modern Digital Marketing Agency Linkedin Banner.png" />
     </div>
-</div>
+
 
 
 <div class="card-deck text-primary">
     <div class="card text-center">
 
-        <h5 class="card-title display-2 align-middle">@Model.CategoriesCount</h5>
+        <h5 class="card-title display-3 align-middle">@Model.CategoriesCount</h5>
 
 
         <div class="card-footer display-5 font-weight-bold">
@@ -28,7 +25,7 @@
     </div>
     <div class="card text-center">
 
-        <h5 class="card-title display-2 align-middle">@Model.ProductsCount</h5>
+        <h5 class="card-title display-3 align-middle">@Model.ProductsCount</h5>
 
 
         <div class="card-footer display-5 font-weight-bold">
@@ -38,7 +35,7 @@
     </div>
     <div class="card text-center">
 
-        <h5 class="card-title display-2 align-middle">@Model.OrdersCount</h5>
+        <h5 class="card-title display-3 align-middle">@Model.OrdersCount</h5>
 
 
         <div class="card-footer display-5 font-weight-bold">
@@ -46,4 +43,98 @@
         </div>
 
     </div>
+
+    <div class="card text-center">
+
+        <h5 class="card-title display-3 align-middle"> $@Model.TotalEarnings</h5>
+
+
+        <div class="card-footer display-5 font-weight-bold">
+            <a href="#">Earning</a>
+        </div>
+
+    </div>
+
+
+
 </div>
+
+
+<div class="row mt-lg-5">
+    <div class="col-lg-6 mt-lg-5">
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+    </div>
+    <div class="col-lg-6 mt-lg-5">
+        <canvas id="myLineChart" style="width:100%;max-width:600px"></canvas>
+    </div>
+
+</div>
+
+
+
+<script>
+   var xValues = [
+    "Products",
+    "Categories",
+    "Orders"
+];
+
+var productsYValues = [
+    @Model.ProductsCount,
+    @Model.CategoriesCount,
+   @Model.OrdersCount
+];
+
+var barColors = [
+    "#b91d47",
+    "#00aba9",
+    "#2b5797"
+];
+
+var chart = new Chart("myChart", {
+    type: "bar",
+    data: {
+        labels: xValues,
+        datasets: [{
+            label: 'Categories - Products - Total Orders',
+            backgroundColor: barColors,
+            data: productsYValues
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: "Total Products, Categories, and Orders"
+        }
+    }
+});
+
+var data = {
+    datasets: [{
+        label: 'Total Earning',
+        data: [
+            @Model.TotalEarnings,
+            @Model.OrdersCount
+        ],
+        borderColor: "#b91d47",
+        backgroundColor: "rgba(255,0,0,0.1)",
+        fill: false
+    }],
+    labels: [
+        "Total Earnings",
+        "Order Count"
+    ]
+};
+
+var linechart = new Chart("myLineChart", {
+    type: "line",
+    data: data,
+    options: {
+        title: {
+            display: true,
+            text: "Total Earnings and Order Count"
+        }
+    }
+});
+
+</script>

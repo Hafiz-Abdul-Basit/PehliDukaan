@@ -8,6 +8,13 @@ using System.Web.Mvc;
 using PehliDukaan.Services;
 using PehliDukaan.Entities;
 using System.Globalization;
+using System.Net;
+using System.Net.Mail;
+using System.Configuration;
+using System.Net.Configuration;
+using PehliDukaan.web.Models.ViewModels;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PehliDukaan.web.Controllers {
 
@@ -30,10 +37,48 @@ namespace PehliDukaan.web.Controllers {
             return View();
         }
 
-        public ActionResult Contact() {
-            ViewBag.Message = "Your contact page.";
+
+        // GET: Home
+        [HttpGet]
+        public ActionResult ContactForm() {
+            return View();
+        }
+
+        [HttpPost]
+    
+        public ActionResult ContactForm(string email, string subject, string message) {
+            try {
+                if (ModelState.IsValid) {
+                    var senderEmail = new MailAddress(email, "Sender");
+                    var receiverEmail = new MailAddress("abdul.basitttt73@gmail.com", "Admin");
+                    var password = "abdulbasit1234";
+                    var sub = subject;
+                    var body = message;
+
+                    var smtp = new SmtpClient {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(senderEmail.Address, password)
+                    };
+
+                    using (var mess = new MailMessage(receiverEmail,senderEmail ) {
+                        Subject = sub,
+                        Body = body
+                    }) {
+                        smtp.Send(mess);
+                    }
+
+                    return RedirectToAction("Index"); // Redirect to a success page or desired action
+                }
+            }
+            catch (Exception ex) {
+                ViewBag.Error = "Some Error";
+                Response.Write(ex.ToString());
+            }
 
             return View();
         }
     }
-}

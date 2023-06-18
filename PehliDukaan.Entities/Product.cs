@@ -19,6 +19,5 @@ namespace PehliDukaan.Entities {
         public int CategoryID { get; set; }
 
         public string ImageURL { get; set; }
-
     }
 }

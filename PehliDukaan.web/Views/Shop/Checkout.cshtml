@@ -4,7 +4,12 @@
     ViewBag.Title = "Checkout";
 }
 
-@if (Model != null && Model.CartProducts != null && Model.CartProducts.Any()) {
+@if (!Model.CartProducts.Any()) {
+    <div>
+        <b>No Products in Cart.</b>
+    </div>
+}
+else {
     var i = 1;
     <section class="flat-row main-shop shop-slidebar">
         <div class="container">
@@ -14,15 +19,14 @@
                         <span class="text-muted">Your cart</span>
                     </h4>
                     <ul class="list-group mb-3">
-                        @foreach (var product in Model.CartProducts) {
-                            var productQuantity = Model.CartProducts.Where(x => x.Id == product.Id).Count();
+                        @foreach (var product in Model.CartProducts.ToList()) {
 
                             <li class="list-group-item d-flex justify-content-between lh-condensed" data-id="@product.Id">
                                 <div>
-                                    <h6 class="my-0">@i - @product.Name - Qty: @productQuantity</h6>
+                                    <h6 class="my-0">@i - @product.Name - Qty: @product.Quantity</h6>
                                     <small class="text-muted">@(product.Description.Length > 100 ? product.Description.Substring(0, 99) : product.Description)</small>
                                 </div>
-                                <span class="text-muted">Unit Price: $ @product.Price - Total Price: @(productQuantity * product.Price)</span>
+                                <span class="text-muted">Unit Price: $ @product.Price - Total Price: @(product.Quantity * product.Price)</span>
                             </li>
 
                             i++;
@@ -30,7 +34,7 @@
 
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total(USD)</span>
-                            <strong>$ @Model.CartProducts.Sum(x => x.Price))</strong>
+                            <strong>$ @(Model.CartProducts.Sum(x => x.Price * (Model.CartProducts.FirstOrDefault(p => p.Id == x.Id)?.Quantity ?? 0)))</strong>
                         </li>
                     </ul>
                 </div>
@@ -64,39 +68,33 @@
 
 
     <script>
-        $("#placeOrderBtn").click(function () {
-            //getCookieJsonItems()
-            debugger;
-        $.ajax({
-            method: "POST",
-			url: '@Url.Action("PlaceOrder", "Shop")',
-            data: JSON.stringify([
-                @Model.CartProducts.Select(p => String.Format("{{\"id\": {0}, \"quantity\": {1}}},", p.Id, p.Quantity))
-            ]),
-            contentType: "application/json; charset=utf-8",
-		})
-        .done(function (response) {
-        	if(response.Success)
-        	{
-        		$.cookie('CartProducts', '', { path: '/' });
-        		updateCartProducts();
+      $("#placeOrderBtn").click(function () {
+          const ProductCartCookieName = "CartProducts";
+          const products = getCookieJsonItems(ProductCartCookieName);
 
-        		swal("Done", "Your Order has been placed.", "success").then((value) => {
-        			window.location = '@Url.Action("Index", "Shop")';
-        		});;
-        	}
-        	else{
-        		swal("Failed", "Unable to place order.", "warning");
-        	}
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-        	alert("FAIL");
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("PlaceOrder", "Shop")',
+                data: JSON.stringify(products),
+                contentType: "application/json; charset=utf-8",
+            })
+                .done(function (response) {
+                    if (response.Success) {
+                        debugger;
+                        $.cookie('CartProducts', '', { path: '/' });
+                        updateCartProducts();
+
+                        swal("Done", "Your Order has been placed.", "success").then((value) => {
+                            window.location = '@Url.Action("Index", "Shop")';
+                        });;
+                    }
+                    else {
+                        swal("Failed", "Unable to place order.", "warning");
+                    }
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("FAIL");
+                });
         });
-	});
     </script>
-}
-else {
-    <div>
-        <b>No Products in Cart.</b>
-    </div>
 }

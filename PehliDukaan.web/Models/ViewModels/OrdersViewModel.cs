@@ -10,6 +10,8 @@ namespace PehliDukaan.web.Models.ViewModels {
         public Pager Pager { get; set; }
         public string Status { get; set; }
         public string UserID { get; set; }
+        public PehliDukaanUser OrderBy { get; set; }
+
     }
 
 

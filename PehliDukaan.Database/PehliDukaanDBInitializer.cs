@@ -22,6 +22,7 @@ namespace PehliDukaan.Database {
             List<IdentityRole> rolesInShop = new List<IdentityRole>();
 
             rolesInShop.Add(new IdentityRole() { Name = "Administrator" });
+            rolesInShop.Add(new IdentityRole() { Name = "Moderator" });
             rolesInShop.Add(new IdentityRole() { Name = "User" });
 
             var roleStore = new RoleStore<IdentityRole>(context);
@@ -57,12 +58,12 @@ namespace PehliDukaan.Database {
 
                     //add necessary roles to admin
                     usersManager.AddToRole(admin.Id, "Administrator");
+                    usersManager.AddToRole(admin.Id, "Moderator");
                     usersManager.AddToRole(admin.Id, "User");
-
 
                 }
 
-            } 
+            }
 
         }
 

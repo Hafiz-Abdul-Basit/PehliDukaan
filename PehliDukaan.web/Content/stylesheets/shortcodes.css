@@ -95,7 +95,9 @@
 .flat-row.shop-related {
 	padding: 54px 0px 74px 0px;
 }
-
+.flat-row-new.row-image-box {
+		padding: 7px 0px 29px 0px;
+}
 .flat-row.row-image-box {
 	padding: 71px 0px 29px 0px;
 }
@@ -183,7 +185,8 @@
 .title-section {
 	position: relative;
 	text-align: center;
-	margin-bottom: 48px;
+	margin-bottom: 40px;
+	margin-top:50px;
 }
 
 .title-section.margin_bottom_17 {

@@ -1,7 +1,70 @@
 ﻿@model PehliDukaan.web.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Use another service to log in.</h4>
+
+<style>
+    .button {
+        width: auto;
+        display: inline-block;
+        padding: 0 18px 0 6px;
+        border: 0 none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 250ms linear;
+    }
+
+        .button:hover {
+            text-decoration: none;
+        }
+
+    .button--social-login {
+        margin-bottom: 12px;
+        margin-right: 12px;
+        color: white;
+        height: 50px;
+        line-height: 46px;
+        position: relative;
+        text-align: left;
+    }
+
+        .button--social-login .icon {
+            margin-right: 12px;
+            font-size: 24px;
+            line-height: 24px;
+            width: 42px;
+            height: 24px;
+            text-align: center;
+            display: inline-block;
+            position: relative;
+            top: 4px;
+        }
+
+            .button--social-login .icon:before {
+                display: inline-block;
+                width: 40px;
+            }
+
+            .button--social-login .icon:after {
+                content: "";
+            }
+
+    .button--googleplus {
+        background-color: #DD4B39;
+        border: 1px solid #c23321;
+    }
+
+        .button--googleplus .icon {
+            border-right: 1px solid #c23321;
+        }
+
+            .button--googleplus .icon:after {
+                border-right: 1px solid #e47365;
+            }
+
+        .button--googleplus:hover {
+            background-color: #d73925;
+        }
+</style>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
@@ -16,10 +79,18 @@
     else {
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form" })) {
             @Html.AntiForgeryToken()
-            <div id="socialLoginList">
+            @*<div id="socialLoginList">
                 <p>
                     @foreach (AuthenticationDescription p in loginProviders) {
                         <button type="submit" class="btn btn-outline-dark" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                    }
+                </p>
+            </div>*@
+
+            <div id="socialLoginList">
+                <p>
+                    @foreach (AuthenticationDescription p in loginProviders) {
+                        <button type="submit" class="button button--social-login button--googleplus" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType <i class="icon fa fa-google-plus"></i>Login With Google +</button>
                     }
                 </p>
             </div>

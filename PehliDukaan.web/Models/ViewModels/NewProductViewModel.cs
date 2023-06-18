@@ -1,4 +1,5 @@
 ﻿using PehliDukaan.Entities;
+using PehliDukaan.Services.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -45,5 +46,7 @@ namespace PehliDukaan.web.Models.ViewModels {
 
     public class ProductViewModel {
         public Product Product { get; set; }
+        public int Quantity { get; set; }
+
     }
 }

@@ -56,15 +56,7 @@
                             }
                         </div>
                     </div><!-- /.widget -->
-                    <div class="widget widget-price">
-                        <h5 class="widget-title">Filter by price</h5>
-                        <div class="price-filter">
-                            <div id="slide-range"></div>
-                            <p class="amount">
-                                Price: <input type="text" id="amount" disabled="">
-                            </p>
-                        </div>
-                    </div>
+                  
                     <a href="@Url.Action("Index", "Shop")" class="btn btn-danger">Reset Filters</a><!-- /.widget -->
                 </div><!-- /.sidebar -->
             </div><!-- /.col-md-3 -->
@@ -122,42 +114,17 @@
 
 <script>
 
-    const productAddToCartClass = ".productAddToCart";
-    const ProductCartCookieName = "CartProducts";
+    var addToCartButtons = document.querySelectorAll(".productAddToCart");
 
-    var products;
-    $(productAddToCartClass).click(function () {
-        const $t = $(this);
-        const productId = parseInt($t.attr('data-id'));
+    // Add event listener to each add to cart button
+    addToCartButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const productId = this.dataset.id;
+            addOrUpdateProductInShoppingCart(productId);
 
-        const cartItems = getCookieJsonItems(ProductCartCookieName) ?? [];
-
-        const existingProduct = findFromObject(cartItems, item => item.id === productId);
-        if (!existingProduct) {
-            addItemInObject(cartItems, { "id": productId, "quantity": 1 });
-        }
-        else {
-            existingProduct.quantity++;
-            //updateFromObject(cartItems, existingProduct, item => item.id === productId);
-        }
-
-        addCookieJsonItems(cartItems, ProductCartCookieName);
-        console.log({ cartItems });
-
-        //for (const item of cartItems) {
-        //    console.log(item);
-        //}
-
-        //var productID = $(this).attr('data-id');
-
-        //products.push(productID);
-
-        //$.cookie(ProductCartCookieName, products.join('-'), { path: '/' });
-
-        //updateCartProducts();
-
-        //swal("Done", "Product Added to Cart!", "success");
+            updateCartProducts();
+            swal("Done", "Product Added to Cart!", "success");
+        });
     });
-
 
 </script>

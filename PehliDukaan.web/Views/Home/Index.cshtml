@@ -13,7 +13,7 @@
             <!-- Slide 1 -->
             <li data-transition="random">
                 <!-- Main Image -->
-                <img src="~/Content/images/red white shoes sale banner.png" alt="" data-bgposition="center center" data-no-retina>
+                <img src="~/Content/images/red white shoes sale banner.png" class="w-100 h-100" alt="" data-bgposition="center center" data-no-retina>
 
                 <!-- Layers -->
                 <div class="tp-caption tp-resizeme text-white font-weight-300"
@@ -91,14 +91,14 @@
                      data-splitin="none"
                      data-splitout="none"
                      data-responsive_offset="on">
-                    <a href="@Url.Action("Index", "Shop")" class="themesflat-button has-padding-36 bg-accent has-shadow"><span>SHOP NOW</span></a>
+
                 </div>
             </li>
             <!-- /End Slide 1 -->
             <!-- Slide 2 -->
             <li data-transition="random">
                 <!-- Main Image -->
-                <img src="~/Content/images/_.png" alt="" data-bgposition="center center" data-no-retina>
+                <img src="~/Content/images/_.png" class="w-100 h-100" alt="" data-bgposition="center center" data-no-retina>
 
                 <!-- Layers -->
                 <div class="tp-caption tp-resizeme text-333 font-weight-400 text-right"
@@ -176,7 +176,6 @@
                      data-splitin="none"
                      data-splitout="none"
                      data-responsive_offset="on">
-                    <a href="@Url.Action("Index", "Shop")" class="themesflat-button bg-accent has-shadow"><span>BUY NOW</span></a>
                 </div>
             </li>
             <!-- /End Slide 2 -->
@@ -184,14 +183,20 @@
     </div>
 </div>
 <!-- END SLIDER -->
-@if (Model.FeaturedCategories != null & Model.FeaturedCategories.Count >= 4 ) {
+
+<div class="title-section mt-lg-5">
+    <h2 class="title">
+        Featured Categories
+    </h2>
+</div>
+@if (Model.FeaturedCategories != null & Model.FeaturedCategories.Count >= 4) {
 
     var firstCategory = Model.FeaturedCategories[0];
     var secondCategory = Model.FeaturedCategories[1];
     var thirdCategory = Model.FeaturedCategories[2];
     var fourthCategory = Model.FeaturedCategories[3];
     <!-- IMAGE BOX -->
-    <section class="flat-row row-image-box">
+    <section class="flat-row-new row-image-box">
         <div class="container">
             <div class="row gutter-10">
 
@@ -201,14 +206,14 @@
                             <div class="inner">
                                 @if (firstCategory != null) {
 
-                                   
+
 
                                     <div class="thumb">
                                         <img src="@firstCategory.ImageURL" alt="Image">
                                         <div class="elm-btn">
-                                           
+
                                             <a href="@Url.Action("Index", "Shop", new { categoryID = firstCategory.Id, sortBy = Model.SortBy })" class="themesflat-button bg-white width-150">@firstCategory.Name</a>
-                                            
+
                                         </div>
                                         <div class="overlay-effect bg-color-1"></div>
                                     </div>
@@ -291,26 +296,29 @@
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section>
-<!-- END PRODUCT NEW -->
-<!-- ANIMATION BOX -->
+
+
 <section class="flat-row row-animation-box bg-section row-1">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="flat-animation-block">
                     <div class="title-section width-before-17 bg-before-white margin-bottom-14">
-                        <div class="sup-title"><span>NEW TREND 2018</span></div>
-                        <h2 class="title font-size-52 line-height-76">Women‘s Collection</h2>
-                        <div class="sub-title"><span>Big Sale of this Week</span></div>
+                        <div class="sup-title"><span>NEW TREND 2023</span></div>
+                        <h2 class="title font-size-52 line-height-76">Shoes Collection</h2>
+                        <div class="sub-title"><span>Big Collection of this Week</span></div>
                     </div>
                     <div class="elm-btn text-center">
-                        <a href="#" class="themesflat-button bg-accent has-padding-36">Shop Now</a>
+                        <a href="@Url.Action("Index", "Shop")" class="themesflat-button bg-accent has-padding-36">Shop Now</a>
                     </div>
                 </div><!-- /.flat-animation-block -->
             </div>
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section>
+<!-- END PRODUCT NEW -->
+<!-- ANIMATION BOX -->
+
 <!-- END ANIMATION BOX -->
 <!-- PRODUCT -->
 <section class="flat-row row-product-project style-1">

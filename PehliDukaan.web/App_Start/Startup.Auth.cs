@@ -63,11 +63,10 @@ namespace PehliDukaan.web
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions() {
+                ClientId = "898619193239-gu05dg5isaqvr4cigakn6bi2rgvcmcv4.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }

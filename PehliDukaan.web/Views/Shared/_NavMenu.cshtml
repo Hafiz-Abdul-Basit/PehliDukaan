@@ -1,4 +1,5 @@
-﻿<style>
+﻿
+<style>
     .header-center .menu-extra, .header-style-1 .menu-extra {
         right: 15px;
         display: flex;
@@ -22,7 +23,7 @@
 
                 @*@if (User.Identity.IsAuthenticated) {
 
-        }*@
+                    }*@
 
 
 
@@ -30,20 +31,43 @@
 
                 @if (User.Identity.IsAuthenticated) {
                     if (User.IsInRole("Administrator")) {
-                        <a class="btn btn-block ml-3" href="@Url.Action("Index","Dashboard")">Dashboard</a>
+                        <a class="btn btn-primary ml-3" href="@Url.Action("Index","Dashboard")">Dashboard</a>
 
                     }
-                    <a class="btn btn-block ml-3" href="#" id="btnLogOff">LogOut</a>
+                    <a class="btn btn-outline-primary ml-3" href="#" id="btnLogOff">LogOut</a>
 
                 }
                 else {
-                    <a class="btn btn-block ml-3" href="@Url.Action("Login","Account")">Login</a>
+                    <a class="btn btn-outline-primary ml-3" href="@Url.Action("Login","Account")">Login</a>
                 }
 
+                @if (User.Identity.IsAuthenticated) {
 
-                <li class="box-cart nav-top-cart-wrapper">
-                    <a class="icon_cart nav-cart-trigger active" href="@Url.Action("AddToCart", "Shop")"><span id="cartProductsCount">0</span></a>
-                </li>
+                    if (User.IsInRole("Administrator")) {
+
+
+                        <a class="btn btn-outline-primary ml-3 d-none" href="@Url.Action("UserProfileDetails", "Order", new {ID = User.Identity.Name})">My Orders</a>
+
+                    }
+                    else {
+
+                        <a class="btn btn-outline-primary ml-3 " href="@Url.Action("UserProfileDetails", "Order")">My Orders</a>
+
+
+                    }
+                }
+
+                @if (User.IsInRole("Administrator")) {
+
+                    <li class="box-cart nav-top-cart-wrapper d-none">
+                        <a class="icon_cart nav-cart-trigger active" href="@Url.Action("AddToCart", "Shop")"><span id="cartProductsCount">0</span></a>
+                    </li>
+                }
+                else {
+                    <li class="box-cart nav-top-cart-wrapper">
+                        <a class="icon_cart nav-cart-trigger active" href="@Url.Action("AddToCart", "Shop")"><span id="cartProductsCount">0</span></a>
+                    </li>
+                }
 
             </ul><!-- /.menu-extra -->
 
@@ -53,15 +77,15 @@
                         <li>
                             <a href="@Url.Action("Index", "Home")">Home</a>
                         </li>
-                        <li>
-                            <a href="@Url.Action("Index", "Shop")">Categories</a>
-                        </li>
+                        @*<li>
+                                <a href="@Url.Action("Index", "Shop")">Categories</a>
+                            </li>*@
                         <li>
                             <a href="@Url.Action("Index", "Shop")">All Products</a>
                         </li>
 
                         <li>
-                            <a href="@Url.Action("Checkout", "Shop")">Contact Us</a>
+                            <a href="@Url.Action("ContactForm", "Home")">Contact Us</a>
                         </li>
                     </ul>
                 </nav><!-- /.mainnav -->

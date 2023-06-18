@@ -15,5 +15,5 @@ function addCookieJsonItems(items, cookieName, path = "/") {
 
 function getCookieJsonItems(cookieName) {
     const jsonString = getCookieItem(cookieName);
-    return jsonString ? JSON.parse(jsonString) : undefined;
+    return jsonString ?JSON.parse(jsonString):undefined;
 }

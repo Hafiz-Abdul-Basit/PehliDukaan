@@ -9,7 +9,6 @@
             <th class="font-weight-bold">ID</th>
             <th class="font-weight-bold">Roles</th>
             <th class="font-weight-bold">Users</th>
-            <th class="font-weight-bold">Actions</th>
 
         </tr>
     </thead>
@@ -24,12 +23,7 @@
                         @role.Name
                     </td>
                     <td>@role.Users.Count</td>
-                    <td>
-                        <a href="@Url.Action("UserDetail", "Dashboard")" class="moreDetailBtn btn btn-primary" data-id="@role.Id">
-                            <i class="fas fa-edit"></i>
-                            More Details
-                        </a>
-                    </td>
+                   
                 </tr>
             }
         }

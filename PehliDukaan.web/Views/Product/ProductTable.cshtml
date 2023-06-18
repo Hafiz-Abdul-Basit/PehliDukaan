@@ -221,18 +221,12 @@
 
     var products = [];
 
-    $(".addtoCart").click(function () {
+     document.querySelector(".addtoCart").addEventListener("click", function () {
+        const productId = this.dataset.id;
+        addOrUpdateProductInShoppingCart(productId);
 
-        var productID = $(this).attr("data-id");
-
-        products.push(productID);
-
-        $.cookie("CartProducts", products.join("-"), { path: "/" });
-
-        alert("Product added to cart")
-
+        updateCartProducts();
+        swal("Done", "Product Added to Cart!", "success");
     });
-
-
 
 </script>

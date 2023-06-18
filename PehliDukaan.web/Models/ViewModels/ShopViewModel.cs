@@ -17,24 +17,22 @@ namespace PehliDukaan.web.Models.ViewModels {
 
     public class CheckoutViewModel {
 
-        public IEnumerable<CartProductResponse> CartProducts { get; set; }
-
-
+        public IEnumerable<CartProductResponse> CartProducts { get; set; } = new HashSet<CartProductResponse>();
         public PehliDukaanUser User { get; set; }
 
 
     }
 
- 
 
 
 
-    //public class FilterProductsViewModel {
-    //    public List<Product> Products { get; set; }
 
-    //    public Pager Pager { get; set; }
-    //    public int? SortBy { get; set; }
-    //    public int? CategoryID { get; set; }
-    //    public string SearchTerm { get; set; }
-    //}
+    public class FilterProductsViewModel {
+        public List<Product> Products { get; set; }
+
+        public Pager Pager { get; set; }
+        public int? SortBy { get; set; }
+        public int? CategoryID { get; set; }
+        public string SearchTerm { get; set; }
+    }
 }

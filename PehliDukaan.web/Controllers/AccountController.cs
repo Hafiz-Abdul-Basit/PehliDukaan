@@ -349,7 +349,7 @@ namespace PehliDukaan.web.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email});
             }
         }
 
@@ -373,7 +373,7 @@ namespace PehliDukaan.web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new PehliDukaanUser { UserName = model.Email, Email = model.Email };
+                var user = new PehliDukaanUser { UserName = model.Email, Email = model.Email, Name = model.Name, Address = model.Address};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

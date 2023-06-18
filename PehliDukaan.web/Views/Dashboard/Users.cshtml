@@ -35,23 +35,13 @@
                         <div class="form-group">
                             <label>Action</label>
                             <div class="row">
-                                <div class="col-md-3 pr-0">
+                                <div class="col-md-4 pr-0">
                                     <button class="btn btn-primary form-control" type="submit" id="searchBtn">Search</button>
                                 </div>
-                                <div class="col-md-3 pr-0">
+                                <div class="col-md-4 pr-0">
                                     <a class="btn btn-primary form-control" type="button" id="resetBtn" href="@Url.Action("Users", "Dashboard")">Reset</a>
                                 </div>
-                                <div class="col-md-5 pr-0">
-                                    <select class="form-control custom-select" name="roleID">
-                                        <option>Select Role..</option>
-                                        @foreach (var role in Model.Roles) {
-
-                                            var selected = role.Id == roleID ? "selected" : string.Empty;
-                                            <option value="@role.Id" @selected>@role.Name</option>
-
-                                        }
-                                    </select>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>

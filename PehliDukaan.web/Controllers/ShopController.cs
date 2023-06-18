@@ -57,7 +57,8 @@ namespace PehliDukaan.web.Controllers {
             return View(model);
         }
 
-        //[Authorize]
+
+        [Authorize]
         public ActionResult AddToCart() {
             CheckoutViewModel model = new CheckoutViewModel();
 
@@ -75,7 +76,7 @@ namespace PehliDukaan.web.Controllers {
         }
 
         // GET: Shop
-        //[Authorize]
+        [Authorize]
         public ActionResult Checkout() {
             CheckoutViewModel model = new CheckoutViewModel();
 
@@ -103,11 +104,11 @@ namespace PehliDukaan.web.Controllers {
                 UserId = User.Identity.GetUserId(),
                 OrderedAt = DateTime.Now,
                 Status = "Pending",
-                TotalAmount = boughtProducts.Sum(x => x.Price * products.Sum(y => y.Quantity)),
+                TotalAmount = boughtProducts.Sum(x => x.Price * products.FirstOrDefault(y => y.Id == x.Id)?.Quantity ?? 0),
 
                 Items = boughtProducts.Select(x => new OrderItem() {
                     ProductId = x.Id,
-                    Quantity = products.Sum(y => y.Quantity),
+                    Quantity = products.FirstOrDefault(y => y.Id == x.Id)?.Quantity ?? 0,
                 }).ToList(),
             };
 

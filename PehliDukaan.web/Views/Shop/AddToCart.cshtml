@@ -46,21 +46,19 @@
                         <td data-th="Quantity">
                             <input type="number" class="form-control text-center" value="@product.Quantity" min="1" onchange="quantityChange(@product.Id, event.target.value)">
                         </td>
-                        <td data-th="Subtotal" class="text-center">$5.11</td>
+                        <td data-th="Subtotal" class="text-center">$@(product.Price * product.Quantity)</td>
                         <td class="actions" data-th="">
-                            <button class="delete-btn" onclick="productDelete(@product.Id)"><i class="fa fa-trash-o"  data-id=" @product.Id"></i> </button>
+                            <button class="delete-btn" onclick="productDelete(@product.Id)"><i class="fa fa-trash-o" data-id=" @product.Id"></i> </button>
                         </td>
                     </tr>
                 </tbody>
             }
             <tfoot>
-                <tr class="visible-xs">
-                    <td class="text-center"><strong>Total $ 5.11</strong></td>
-                </tr>
+
                 <tr>
                     <td><a href="@Url.Action("Index","Shop")" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                     <td colspan="2" class="hidden-xs"></td>
-                    <td class="hidden-xs text-center"><strong>Total $ 5.11</strong></td>
+                    <td class="hidden-xs text-center"><strong> (@Model.CartProducts.Sum(product => product.Price * product.Quantity))</strong></td>
                     <td><a href="@Url.Action("Checkout","Shop")" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
                 </tr>
             </tfoot>
@@ -79,61 +77,23 @@ else {
     const ProductCartCookieName = "CartProducts";
 
     function productDelete(productId) {
-        const cartItems = getCookieJsonItems(ProductCartCookieName);
-        const existingProduct = findFromObject(cartItems, item => item.id === productId);
-        if (!existingProduct) {
-            console.error("Unable to find product");
-            return;
-        }
-
-        deleteFromObject(cartItems, x => x.id === productId);
-        addCookieJsonItems(cartItems, ProductCartCookieName);
-
+        removeProductFromShoppingCart(productId);
+        location.reload();
     }
 
 
     function quantityChange(productId, value) {
-        const cartItems = getCookieJsonItems(ProductCartCookieName);
-        console.log({
-            cartItems,
-            productId,
-            value,
-        })
-        const existingProduct = findFromObject(cartItems, item => item.id === productId);
-        if (!existingProduct) {
-            console.error("Unable to find product");
-            return;
-        }
-
-        existingProduct.quantity = value;
-
-        console.log(cartItems);
-        addCookieJsonItems(cartItems, ProductCartCookieName);
+        setProductQuantityInShoppingCart(productId, value);
+        location.reload();
     }
 
-    var products;
-    $(".productAddToCart").click(function () {
-        const cartItems = getCookieJsonItems(ProductCartCookieName);
-
-
-        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
-            products = existingCookieData.split('-');
-        }
-        else {
-            products = [];
-        }
-
-        var productID = $(this).attr('data-id');
-
-        products.push(productID);
-
-        $.cookie('CartProducts', products.join('-'), { path: '/' });
+    document.querySelector(".productAddToCart").addEventListener("click", function () {
+        const productId = this.dataset.id;
+        addOrUpdateProductInShoppingCart(productId);
 
         updateCartProducts();
-
         swal("Done", "Product Added to Cart!", "success");
     });
 
-   
 
 </script>

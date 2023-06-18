@@ -15,11 +15,13 @@ namespace PehliDukaan.web.Controllers
     {
         CategoriesService categoryService = new CategoriesService();
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult Index() {
          
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult CategoryTable(string search) {
 
             CategorySearchViewModel model = new CategorySearchViewModel();
@@ -36,6 +38,7 @@ namespace PehliDukaan.web.Controllers
             return PartialView("CategoryTable", model);
         }
 
+        [Authorize(Roles = "Administrator")]
 
         // Create: Category
         public ActionResult Create()
@@ -67,6 +70,8 @@ namespace PehliDukaan.web.Controllers
 
 
         // Edit: Category
+        [Authorize(Roles = "Administrator")]
+
         public ActionResult Edit(int Id) {
 
 

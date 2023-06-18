@@ -13,7 +13,7 @@ namespace PehliDukaan.web.Models.ViewModels {
         public int ProductsCount;
 
         public int OrdersCount;
-
+        public int TotalEarnings { get; set; }
 
     }
 
@@ -48,6 +48,26 @@ namespace PehliDukaan.web.Models.ViewModels {
 
        public PehliDukaanUser User { get; set; }
 
+
+    }
+
+    public class UserRolesViewModel {
+
+        public List<IdentityRole> AvailableRoles { get; set; }
+        public List<IdentityRole> UserRoles { get; set; }
+        public PehliDukaanUser User { get; internal set; }
+    }
+
+    public class RolesViewModel {
+
+        public string SearchTerm{ get; set; }
+
+
+    }
+    public class ReportsViewModel {
+        public int CurrentMonth { get; set; }
+        public int CurrentYear { get; set; }
+        public List<ProductReportItem> ProductReport { get; set; }
 
     }
 }

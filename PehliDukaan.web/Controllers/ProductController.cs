@@ -6,7 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PehliDukaan.Services;
-
+using PehliDukaan.Services.Models;
+using Newtonsoft.Json;
 
 namespace PehliDukaan.web.Controllers
 {
@@ -16,11 +17,14 @@ namespace PehliDukaan.web.Controllers
         CategoriesService categoryService = new CategoriesService();
 
         // GET: Product
+        [Authorize(Roles = "Administrator")]
+
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult ProductTable(string search)
         {
 
@@ -38,6 +42,7 @@ namespace PehliDukaan.web.Controllers
         }
 
         // GET: Category
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create() {
 
             NewProductViewModel model = new NewProductViewModel();
@@ -63,6 +68,7 @@ namespace PehliDukaan.web.Controllers
         }
 
         // GET: Category
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int Id) {
 
             EditProductViewModel model = new EditProductViewModel();
@@ -111,10 +117,13 @@ namespace PehliDukaan.web.Controllers
         }
 
         [HttpGet]
+
         public ActionResult Details(int ID) {
             ProductViewModel model = new ProductViewModel();
 
+        
             model.Product = productsService.GetProduct(ID);
+       
 
             if (model.Product == null) return HttpNotFound();
 

@@ -68,7 +68,6 @@ namespace PehliDukaan.Services {
             }
         }
 
-        
 
         public int GetMaximumPrice() {
             using (var context = new PDContext()) {

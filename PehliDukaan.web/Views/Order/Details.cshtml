@@ -48,16 +48,20 @@
                             <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" value="@Model.OrderBy.Address">
                         </div>
 
-                        <div class="mb-3">
-                            <label for="address">Status</label>
-                            <select name="Status" id="changeStatus">
-                                @foreach (var availableStatus in Model.AvailableStatuses) {
-                                    var isSelectedStatus = availableStatus == Model.Order.Status;
-
-                                    <option @(isSelectedStatus ? "selected" : string.Empty)>@availableStatus</option>
-                                }
-                            </select>
-                        </div>
+                        @if (User.IsInRole("Administrator")) {
+                            <div class="mb-3">
+                                <label for="address">Status</label>
+                                <select name="Status" id="changeStatus">
+                                    @foreach (var availableStatus in Model.AvailableStatuses) {
+                                        var isSelectedStatus = availableStatus == Model.Order.Status;
+                                        <option @(isSelectedStatus ? "selected" : string.Empty)>@availableStatus</option>
+                                    }
+                                </select>
+                            </div>
+                        }
+                        else {
+                            <input type="hidden" name="Status" value="@Model.Order.Status" />
+                        }
 
                     </form>
                 </div>

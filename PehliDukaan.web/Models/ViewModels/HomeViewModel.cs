@@ -11,7 +11,6 @@ namespace PehliDukaan.web.Models {
         public List<Category> FeaturedCategories { get; set; }
         public List<Product> FeaturedProducts { get; set; }
         public int? CategoryID { get; set; }
-
         public int? SortBy { get; set; }
 
     }

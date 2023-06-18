@@ -91,6 +91,7 @@
     <Compile Include="Models\ProductCartCookie.cs" />
     <Compile Include="Models\Requests\SaveOrderRequest.cs" />
     <Compile Include="Models\Responses\CartProductResponse.cs" />
+    <Compile Include="ReportService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="PDSignInManager.cs" />
     <Compile Include="PDRoleManager.cs" />

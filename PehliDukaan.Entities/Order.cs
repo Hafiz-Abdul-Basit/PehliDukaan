@@ -17,5 +17,7 @@ namespace PehliDukaan.Entities {
         public decimal TotalAmount { get; set; }
 
         public virtual List<OrderItem> Items { get; set;}
+
+     
     }
 }

@@ -5,9 +5,20 @@ namespace PehliDukaan.web.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "The Name field is required.")]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "The Email field is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "The Address field is required.")]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        // Add more fields as needed
     }
 
     public class ExternalLoginListViewModel
