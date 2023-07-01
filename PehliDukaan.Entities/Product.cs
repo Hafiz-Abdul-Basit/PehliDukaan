@@ -18,6 +18,6 @@ namespace PehliDukaan.Entities {
 
         public int CategoryID { get; set; }
 
-        public string ImageURL { get; set; }
+        public byte[] ImageData { get; set; }
     }
 }

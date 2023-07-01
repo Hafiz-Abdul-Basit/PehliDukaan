@@ -8,7 +8,7 @@ namespace PehliDukaan.Entities {
 
     public class Category : BaseEntity {
 
-        public string ImageURL { get; set; }
+        public byte[] ImageData { get; set; }
         public List<Product> Products { get; set; }
 
         public bool isFeatured { get; set; }

@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Index";
-    var defaultImageURL = "/Content/images/profile.png";
 
 }
 
@@ -61,21 +60,17 @@
                 </div><!-- /.sidebar -->
             </div><!-- /.col-md-3 -->
             <div class="col-md-9">
-                <div class="filter-shop clearfix">
-                    <p class="showing-product float-right">
-                        Showing 1–12 of 56 Products
-                    </p>
-                </div><!-- /.filte-shop -->
+                
                 <div class="product-content product-threecolumn product-slidebar clearfix">
                     <ul class="product style2 sd1">
 
                         @foreach (var product in Model.Products) {
-                            var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
+                            var base64Image = Convert.ToBase64String(product.ImageData);
 
                             <li class="product-item">
                                 <div class="product-thumb clearfix">
                                     <a href="@Url.Action("Details", "Product", new { ID = product.Id })">
-                                        <img src="@imageURL" alt="image" style="height: 295px;">
+                                        <img src="data:image/png;base64,@base64Image" alt="image" style="height: 295px;">
                                     </a>
                                 </div>
                                 <div class="product-info clearfix">
@@ -96,17 +91,7 @@
                         }
                     </ul><!-- /.product -->
                 </div><!-- /.product-content -->
-                <div class="product-pagination text-center clearfix">
-                    <ul class="flat-pagination">
-                        <li class="prev">
-                            <a href="#"><i class="fa fa-angle-left"></i></a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li class="active"><a href="#" title="">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                    </ul><!-- /.flat-pagination -->
-                </div>
+               
             </div><!-- /.col-md-9 -->
         </div><!-- /.row -->
     </div><!-- /.container -->

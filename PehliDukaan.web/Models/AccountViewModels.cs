@@ -126,4 +126,24 @@ namespace PehliDukaan.web.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class ProfileViewModel {
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using PehliDukaan.Entities;
 using PehliDukaan.Services.Models.Responses;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PehliDukaan.web.Models.ViewModels {
 
@@ -17,8 +18,9 @@ namespace PehliDukaan.web.Models.ViewModels {
 
     public class CheckoutViewModel {
 
-        public IEnumerable<CartProductResponse> CartProducts { get; set; } = new HashSet<CartProductResponse>();
+        public IEnumerable<CartProductResponse> CartProducts { get; set; } = Enumerable.Empty<CartProductResponse>();
         public PehliDukaanUser User { get; set; }
+
 
 
     }

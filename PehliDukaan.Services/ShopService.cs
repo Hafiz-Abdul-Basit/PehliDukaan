@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PehliDukaan.Database;
-
+using System.Data.Entity;
+using PehliDukaan.Services.Models;
 
 namespace PehliDukaan.Services {
     public class ShopService {

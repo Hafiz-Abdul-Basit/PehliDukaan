@@ -23,11 +23,19 @@
 
                 @*@if (User.Identity.IsAuthenticated) {
 
-                    }*@
+        }*@
 
 
 
+                @if (User.Identity.IsAuthenticated) {
+                    if (User.IsInRole("Administrator")) {
+                        <a href="@Url.Action("Profile", "Account")" class="btn btn-primary d-none">Profile</a>
+                    }
+                    else {
+                        <a href="@Url.Action("Profile", "Account")" class="btn btn-primary">Profile</a>
 
+                    }
+                }
 
                 @if (User.Identity.IsAuthenticated) {
                     if (User.IsInRole("Administrator")) {
@@ -78,16 +86,20 @@
                             <a href="@Url.Action("Index", "Home")">Home</a>
                         </li>
                         @*<li>
-                                <a href="@Url.Action("Index", "Shop")">Categories</a>
-                            </li>*@
+            <a href="@Url.Action("Index", "Shop")">Categories</a>
+        </li>*@
                         <li>
                             <a href="@Url.Action("Index", "Shop")">All Products</a>
                         </li>
-
                         <li>
-                            <a href="@Url.Action("ContactForm", "Home")">Contact Us</a>
+                            <a href="@Url.Action("CategoryList", "Category")">Categories</a>
                         </li>
-                    </ul>
+                        @if (!User.IsInRole("Administrator")) {
+                            <li>
+                                <a href="@Url.Action("ContactForm", "Home")">Contact Us</a>
+                            </li>
+                        }
+                        </ul>
                 </nav><!-- /.mainnav -->
             </div><!-- /.nav-wrap -->
 

@@ -20,6 +20,8 @@ namespace PehliDukaan.web.Controllers
 
             if (isLatestProducts) {
                 model.Products = productsService.GetLatestProducts(4).ToList();
+
+
             }
             else if (CategoryID.HasValue && CategoryID.Value > 0) {
                 model.Products = productsService.GetProductsByCategory(CategoryID.Value, 4).ToList();

@@ -48,25 +48,38 @@ namespace PehliDukaan.web.Controllers {
 
         public ActionResult ContactForm(string email, string subject, string message) {
             try {
-                if (ModelState.IsValid) {
-                    var senderEmail = new MailAddress(email, "Sender");
-                    var receiverEmail = new MailAddress("abdul.basitttt73@gmail.com", "Admin");
-                    var password = "abdulbasit1234";
-                    var sub = subject;
-                    var body = message;
+                string host = "smtp.gmail.com";
+                string password = "pflsdtshrayxhaqo\r\n";
+                int port = 587;
+                bool enableSsl = true;
 
+                string senderEmail = "abdul.basitttt8@gmail.com";
+                string displayName = "PehliDUKAAN";
+
+                var sender = new MailAddress(senderEmail, displayName);
+
+                string receiverEmail = email;
+                string receiverDisplayName = "PehliDukaan";
+
+                var receiver = new MailAddress(receiverEmail, receiverDisplayName);
+
+                message += Environment.NewLine + $"Sender: {email}";
+
+
+
+                if (ModelState.IsValid) {
                     var smtp = new SmtpClient {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
-                        EnableSsl = true,
+                        Host = host,
+                        Port = port,
+                        EnableSsl = enableSsl,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(senderEmail.Address, password)
+                        Credentials = new NetworkCredential(senderEmail, password)
                     };
 
-                    using (var mess = new MailMessage(receiverEmail, senderEmail) {
-                        Subject = sub,
-                        Body = body
+                    using (var mess = new MailMessage(senderEmail, receiverEmail) {
+                        Subject = subject,
+                        Body = message
                     }) {
                         smtp.Send(mess);
                     }

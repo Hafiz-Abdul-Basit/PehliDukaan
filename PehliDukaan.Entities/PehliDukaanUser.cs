@@ -12,6 +12,9 @@ namespace PehliDukaan.Entities {
 
         public string Name { get; set; }
         public string Address { get; set; }
+
+        override public string Email { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<PehliDukaanUser> manager) {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

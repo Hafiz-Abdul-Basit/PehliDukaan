@@ -22,7 +22,7 @@ namespace PehliDukaan.Database {
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
-
+        public DbSet<CartProduct> CartProducts { get; set; }
         public static PDContext Create() {
             return new PDContext();
         }

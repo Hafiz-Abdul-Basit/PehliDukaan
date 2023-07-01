@@ -45,7 +45,7 @@ namespace PehliDukaan.Services {
         public List<Category> GetFeaturedCategories() {
 
             using (var context = new PDContext()) {
-                return context.Categories.Where(x => x.isFeatured && x.ImageURL != null).ToList();
+                return context.Categories.Where(x => x.isFeatured && x.ImageData != null).ToList();
             }
         }
 

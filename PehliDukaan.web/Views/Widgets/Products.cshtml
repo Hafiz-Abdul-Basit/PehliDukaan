@@ -2,6 +2,12 @@
 
 @{
     var defaultImageURL = "/Content/images/system/placeholder-image.png";
+    string GetImageUrlFromImageData(byte[] imageData) {
+        if (imageData != null && imageData.Length > 0) {
+            return "data:image/jpeg;base64," + Convert.ToBase64String(imageData);
+        }
+        return defaultImageURL;
+    }
 }
 
 @if (Model != null && Model.Products != null) {
@@ -10,51 +16,67 @@
             <li class="active"><a href="#" data-filter="*">All Product</a></li>
 
             @foreach (var category in Model.Products.Select(x => x.Category).ToList().Distinct()) {
-                <li><a href="#" data-filter=".@(category.Name.ToLower())">For @(category.Name)</a></li>
+                <li><a href="#" data-filter=".@category.Name.ToLower()">For @category.Name</a></li>
             }
         </ul>
         <div class="divider h54"></div>
     }
+<div class="product-content product-fourcolumn clearfix">
+    <ul class="product style2 isotope-product clearfix">
 
-    <div class="product-content product-fourcolumn clearfix">
-        <ul class="product style2 isotope-product clearfix">
+        @foreach (var product in Model.Products) {
+            var imageURL = GetImageUrlFromImageData(product.ImageData);
 
-            @foreach (var product in Model.Products) {
-                var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
-
-                <li class="product-item @product.Category.Name.ToLower()">
-                    <div class="product-thumb clearfix">
-                        <a href="@Url.Action("Details", "Product", new { ID = product.Id })" class="product-thumb">
-                            <img src="@imageURL" alt="image" style="height: 250px;">
-                        </a>
-                        @if (Model.IsLatestProducts) {
-                            <span class="new">New</span>
-                        }
+            <li class="product-item">
+                <div class="product-thumb clearfix">
+                    <a href="@Url.Action("Details", "Product", new { ID = product.Id })">
+                        <img src="@imageURL" alt="image" style="height: 295px;">
+                    </a>
+                </div>
+                <div class="product-info clearfix">
+                    <span class="product-title">
+                        @product.Name
+                    </span>
+                    <div class="price">
+                        <ins>
+                            <span class="amount">$ @product.Price</span>
+                        </ins>
                     </div>
-                    <div class="product-info text-center clearfix">
-                        <span class="product-title">
-                            @product.Name
-                        </span>
-                        <div class="price">
-                            <ins>
-                                <span class="amount">$ @product.Price</span>
-                            </ins>
-                        </div>
-                    </div>
-                    <div class="add-to-cart text-center">
-                        <a class="productAddToCart" data-id="@product.Id">ADD TO CART</a>
-                    </div>
-                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                </li>
-            }
-        </ul>
-    </div>
+                </div>
+                <div class="add-to-cart text-center">
+                    <a class="productAddToCart" data-id="@product.Id">ADD TO CART</a>
+                </div>
+                <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
+            </li>
+        }
+    </ul><!-- /.product -->
+</div><!-- /.product-content -->
 }
 
 
 
 
 <script>
+    var flatIsotope = function () {
+        if ($().isotope) {
+            var $container = $('.isotope-product');
+            $container.imagesLoaded(function () {
+                $container.isotope({
+                    itemSelector: '.product-item',
+                    transitionDuration: '1s',
+                    layoutMode: 'fitRows'
+                });
+            });
+
+            $('.flat-filter li').on('click', function () {
+                var selector = $(this).find("a").attr('data-filter');
+                $('.flat-filter li').removeClass('active');
+                $(this).addClass('active');
+                $container.isotope({ filter: selector });
+                return false;
+            });
+        };
+    }; 
     var addToCartButtons = document.querySelectorAll(".productAddToCart");
 
     // Add event listener to each add to cart button

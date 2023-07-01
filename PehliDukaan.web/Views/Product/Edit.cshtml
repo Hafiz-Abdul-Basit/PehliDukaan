@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Edit";
-    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/profile.png";
 }
 
 <h2>Edit Product</h2>
@@ -35,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label>Image</label>
-                <input type="hidden" id="ImageURL" name="ImageURL" />
+                <input type="hidden" id="ImageData" name="ImageData" />
                 <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
             </div>
 
@@ -44,7 +43,12 @@
         </div>
         <div class="col-md-4">
             <div class="thumb">
-                <img class="img-thumbnail img-fluid" id="productImage" src="@imageURL" />
+                @if (Model.ImageData != null) {
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ImageData)" class="img-thumbnail img-fluid" id="categoryImage" />
+                }
+                else {
+                    <img src="/Content/images/profile.png" class="img-thumbnail img-fluid" id="productImage" />
+                }
             </div>
         </div>
     </div>
@@ -84,65 +88,73 @@
 
 
     $("#updateBtn").click(function () {
+        if ($("#editProduct").valid()) {
+            var formData = new FormData($("#editProduct")[0]); // Create a FormData object from the form
 
-		if ($("#editProduct").valid()) {
-			$.ajax({
-				type: 'POST',
-				url: '/Product/Edit',
-				data: $("#editProduct").serialize()
-			})
-			.done(function (response) {
-				$("#tableContiner").html(response);
-				$("#actionContainer").html("");
-				focusAction("tableContiner");
-			})
-			.fail(function (XMLHttpRequest, textStatus, errorThrown) {
-				alert("FAIL");
-			});
-		}
-		else {
-			swal({
-				title: "Warning",
-				text: "Please enter all valid data in fields.",
-				icon: "warning",
-				buttons: true,
-				dangerMode: true,
-			});
-		}
-	});
+            // Fetch the image file from the input field
+            var imageFile = $("#imageUpload")[0].files[0];
+            formData.set("Image", imageFile); // Set the "Image" field in the FormData object to the image file
 
-   	$("#imageUpload").change(function () {
-		var element = this;
+            $.ajax({
+                type: 'POST',
+                url: '/Product/Edit',
+                data: formData,
+                contentType: false,
+                processData: false,
+            })
+                .done(function (response) {
+                    $("#tableContiner").html(response);
+                    $("#actionContainer").html("");
+                    focusAction("tableContiner");
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("FAIL");
+                });
+        }
+        else {
+            swal({
+                title: "Warning",
+                text: "Please enter all valid data in fields.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            });
+        }
+    });
 
-		var formData = new FormData();
+    $("#imageUpload").change(function () {
+        var element = this;
 
-		var totalFiles = element.files.length;
+        var formData = new FormData();
 
-		for (var i = 0; i < totalFiles; i++) {
-			var file = element.files[i];
-			formData.append("Photo", file);
-		}
+        var totalFiles = element.files.length;
 
-		$.ajax({
-			type: 'POST',
-			url: '/Shared/UploadImage',
-			dataType: 'json',
-			data: formData,
-			contentType: false,
-			processData: false
-		})
-        .done(function (response) {
-        	console.log(response);
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Image", file);
+        }
 
-        	if (response.Success) {
-        		$("#ImageURL").val(response.ImageURL);
-        		$("#productImage").attr("src", response.ImageURL);
-        	}
+        $.ajax({
+            type: 'POST',
+            url: '/Shared/UploadImage',
+            dataType: 'json',
+            data: formData,
+            contentType: false,
+            processData: false
         })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-        	alert("FAIL");
-        });
-	});
+            .done(function (response) {
+                console.log(response);
+
+                if (response.Success) {
+                    $("#ImageData").val(response.ImageData);
+                    $("#productImage").attr("src", "data:image/png;base64," + response.ImageData);
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.responseText);
+                alert("Server error occurred. Please try again later.");
+            });
+    });
 
     $("#cancelBtn").click(function () {
         $("#actionContainer").html("");

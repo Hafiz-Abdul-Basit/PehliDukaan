@@ -139,8 +139,8 @@ namespace PehliDukaan.web.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
-        {
+        // GET: /Account/Register
+        public ActionResult Register() {
             return View();
         }
 
@@ -149,21 +149,15 @@ namespace PehliDukaan.web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new PehliDukaanUser { UserName = model.Username, Email = model.Email, Name = model.Name, Address = model.Address };
+        public async Task<ActionResult> Register(RegisterViewModel model) {
+            if (ModelState.IsValid) {
+                var user = new PehliDukaanUser { UserName = model.Email, Email = model.Email, Name = model.Name, Address = model.Address };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    //assign a role to user
-                    await UserManager.AddToRoleAsync(user.Id, "User");
+                if (result.Succeeded) {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -486,6 +480,68 @@ namespace PehliDukaan.web.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
+        public ActionResult Profile() {
+            // Retrieve the current user's details
+            var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(userId);
+
+            if (user == null) {
+                // Handle the scenario where the user is not found
+                return HttpNotFound();
+            }
+
+            // Pass the user details to the view
+            var model = new ProfileViewModel {
+                Name = user.Name,
+                Email = user.Email,
+                Address = user.Address,
+                Username = user.UserName,
+                // Add any other properties you want to edit
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Profile(ProfileViewModel model) {
+            if (!ModelState.IsValid) {
+                return View(model);
+            }
+
+            // Retrieve the currently logged-in user
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+
+            user.Name = model.Name;
+            user.Email = model.Email;
+            user.Address = model.Address;
+            user.UserName = model.Username;
+
+            // Update the email if it has changed
+            if (user.Email != model.Email) {
+                var setEmailResult = await UserManager.SetEmailAsync(userId, model.Email);
+                if (!setEmailResult.Succeeded) {
+                    ModelState.AddModelError("", "Failed to update email.");
+                    return View(model);
+                }
+            }
+
+            // Save the updated user data
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded) {
+                // Redirect to a success page or perform any other desired actions
+                return RedirectToAction("Index", "Home");
+            }
+            else {
+                // If updating the user fails, add an error to the model and return the view
+                foreach (var error in result.Errors) {
+                    ModelState.AddModelError("", error);
+                }
+                return View(model);
+            }
+        }
+
         #endregion
     }
 }

@@ -57,6 +57,7 @@ namespace PehliDukaan.Services {
             return productReport;
         }
     }
+
     public class ProductReportItem {
         public int ProductId { get; set; }
         public string ProductName { get; set; }

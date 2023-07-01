@@ -598,26 +598,26 @@
     }
   };
 
-  var flatIsotope = function () {
-    if ($().isotope) {
-      var $container = $(".isotope-product");
-      $container.imagesLoaded(function () {
-        $container.isotope({
-          itemSelector: ".product-item",
-          transitionDuration: "1s",
-          layoutMode: "fitRows",
-        });
-      });
+    var flatIsotope = function () {
+        if ($().isotope) {
+            var $container = $('.isotope-product');
+            $container.imagesLoaded(function () {
+                $container.isotope({
+                    itemSelector: '.product-item',
+                    transitionDuration: '1s',
+                    layoutMode: 'fitRows'
+                });
+            });
 
-      $(".flat-filter li").on("click", function () {
-        var selector = $(this).find("a").attr("data-filter");
-        $(".flat-filter li").removeClass("active");
-        $(this).addClass("active");
-        $container.isotope({ filter: selector });
-        return false;
-      });
-    }
-  };
+            $('.flat-filter li').on('click', function () {
+                var selector = $(this).find("a").attr('data-filter');
+                $('.flat-filter li').removeClass('active');
+                $(this).addClass('active');
+                $container.isotope({ filter: selector });
+                return false;
+            });
+        };
+    }; 
 
   var flatCarouselOwl = function () {
     if ($().owlCarousel) {
@@ -851,37 +851,76 @@
 
   // Dom Ready
   $(function () {
-    removePreloader();
-    goTop();
-    parallax();
-    flatRetinaLogo();
-    searchIcon();
-    headerFixed();
-    responsiveMenu();
-    swClick();
-    flatEqualHeight();
-    flatAccordion();
-    countDown();
-    flatCounter();
-    googleMap();
-    flatPrice();
-    flatFilterBox();
-    flatShopSearch();
-    topSearch();
-    flexProduct();
-    quantityNumber();
-    flatTabs();
-    flatImagePopup();
-    flatVideoPopup();
-    flatEffectDir();
-    flatIsotope();
-    flatCarouselOwl();
-    flatContentBox();
-    updateCartProducts();
+      removePreloader();
+      goTop();
+      parallax();
+      flatRetinaLogo();
+      searchIcon();
+      headerFixed();
+      responsiveMenu();
+      swClick();
+      flatEqualHeight();
+      flatAccordion();
+      countDown();
+      flatCounter();
+      googleMap();
+      //flatPrice();  
+      flatFilterBox();
+      flatShopSearch();
+      topSearch();
+      flexProduct();
+      quantityNumber();
+      flatTabs();
+      flatImagePopup();
+      flatVideoPopup();
+      flatEffectDir();
+      flatIsotope();
+      flatCarouselOwl();
+      flatContentBox();
+      updateCartProducts();
   });
 })(jQuery);
 
 function updateCartProducts() {
-  const count = getProductCountOfShoppingCart();
+    const count = getProductCountOfShoppingCart();
+    updateCartProductsInBackend();
   $("#cartProductsCount").html(count);
 }
+function addOrUpdateProductInShoppingCart(productId, quantity = 1) {
+    const product = getProductFromShoppingCart(productId);
+    // If product doesn't exist, add it
+    if (!product) {
+        addProductInShoppingCart(productId, quantity);
+    } else {
+        product.quantity += parseInt(quantity);
+        updateProductInShoppingCart(product);
+    }
+
+    // Update the cart products in the backend (both cookie and database)
+    updateCartProductsInBackend();
+}
+function removeProductFromShoppingCart(productId) {
+    deleteProductFromShoppingCart(productId);
+
+    // Update the cart products in the backend (both cookie and database)
+    updateCartProductsInBackend();
+}
+function deleteProductFromShoppingCart(productId) {
+    // Remove the product from the cookie
+    removeProductFromCookie(productId);
+
+    // Remove the product from the database
+    $.ajax({
+        type: "POST",
+        url: '/Cart/DeleteItem',
+        data: { productId: productId },
+    })
+        .done(function (response) {
+            console.log(response);
+            updateCartProducts(); // Update the cart products count in the frontend
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            console.error({ XMLHttpRequest, textStatus, errorThrown });
+        });
+}
+

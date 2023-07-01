@@ -19,5 +19,13 @@ namespace PehliDukaan.web.Models.ViewModels {
         public List<string> AvailableStatuses { get; set; }
         public Order Order { get; set; }
         public PehliDukaanUser OrderBy { get; set; }
+        public PehliDukaanUser UpdatedUser { get; set; } // Added property
+
+    }
+
+
+    public class OrderConfirmationViewModel {
+        public Order Order { get; set; }
+
     }
 }

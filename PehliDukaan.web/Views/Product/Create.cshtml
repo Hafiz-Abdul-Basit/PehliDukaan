@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label>Image</label>
-                <input type="hidden" id="ImageURL" name="ImageURL" />
+                <input type="hidden" id="ImageData" name="ImageData" />
                 <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
             </div>
             <button id="saveBtn" type="button" class="btn btn-primary">Save</button>
@@ -87,7 +87,7 @@
 
         for (var i = 0; i < totalFiles; i++) {
             var file = element.files[i];
-            formData.append("Photo", file);
+            formData.append("Image", file);
         }
 
         $.ajax({
@@ -102,34 +102,44 @@
                 console.log(response);
 
                 if (response.Success) {
-                    $("#ImageURL").val(response.ImageURL);
-                    $("#productImage").attr("src", response.ImageURL);
+                    $("#ImageData").val(response.ImageData);
+                    $("#productImage").attr("src", "data:image/png;base64," + response.ImageData);
+                    console.log(response.ImageData)
                 }
             })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FAIL");
+            .fail(function (xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+                alert("Server error occurred. Please try again later.");
             });
     });
 
 
     $("#saveBtn").click(function () {
-
         if ($("#createProduct").valid()) {
+            var formData = new FormData($("#createProduct")[0]);
             $.ajax({
                 type: 'POST',
                 url: '/Product/Create',
-                data: $("#createProduct").serialize()
+                data: formData,
+                contentType: false,
+                processData: false
             })
                 .done(function (response) {
+
                     $("#tableContiner").html(response);
                     $("#actionContainer").html("");
                     focusAction("tableContiner");
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("FAIL");
+                    swal({
+                        title: "Error",
+                        text: "Server error occurred. Please try again later.",
+                        icon: "error",
+                        buttons: true,
+                        dangerMode: true,
+                    });
                 });
-        }
-        else {
+        } else {
             swal({
                 title: "Warning",
                 text: "Please enter all valid data in fields.",

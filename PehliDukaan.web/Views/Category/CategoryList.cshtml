@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "CategoryList";
+}
+
+<div class="title-section mt-lg-5">
+    <h2 class="title">
+        Featured Categories
+    </h2>
+</div>
+<section class="flat-row-new row-image-box">
+    <div class="container">
+        <div class="row gutter-10">
+            @if (Model.FeaturedCategories != null) {
+                foreach (var category in Model.FeaturedCategories) {
+                    var base64Image = Convert.ToBase64String(category.ImageData);
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="flat-image-box style-1 data-effect div-h22 clearfix">
+                            <div class="item data-effect-item">
+                                <div class="inner">
+                                    @if (category != null) {
+                                        <div class="thumb">
+                                            <img src="data:image/png;base64,@base64Image" alt="Image">
+                                            <div class="elm-btn">
+                                                <a href="@Url.Action("Index", "Shop", new { categoryID = category.Id, sortBy = Model.SortBy })" class="themesflat-button bg-white width-150">@category.Name</a>
+                                            </div>
+                                            <div class="overlay-effect bg-color-1"></div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section>
+

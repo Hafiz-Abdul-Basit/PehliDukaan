@@ -6,8 +6,6 @@
     var trueChecked = Model.isFeatured ? "checked" : string.Empty;
     var falseChecked = !Model.isFeatured ? "checked" : string.Empty;
 
-    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/profile.png";
-
 }
 
 <h2>Edit Category</h2>
@@ -31,7 +29,7 @@
             <div class="form-group">
                 <label>Image</label>
 
-                <input id="ImageURL" name="ImageURL" type="hidden" value="@Model.ImageURL" />
+                <input id="ImageData" name="ImageURL" type="hidden" value="@Model.ImageData" />
                 <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
 
             </div>
@@ -53,9 +51,12 @@
 
 
             <div class="thumb">
-
-                <img src="@imageURL" class="img-thumbnail img-fluid" id="categoryImage" />
-
+                @if (Model.ImageData != null) {
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ImageData)" class="img-thumbnail img-fluid" id="categoryImage" />
+                }
+                else {
+                    <img src="/Content/images/profile.png" class="img-thumbnail img-fluid" id="categoryImage" />
+                }
             </div>
 
         </div>
@@ -104,7 +105,6 @@
     });
 
     $("#imageUpload").change(function () {
-
         var element = this;
 
         var formData = new FormData();
@@ -112,12 +112,12 @@
         var totalFiles = element.files.length;
 
         for (var i = 0; i < totalFiles; i++) {
-
             var file = element.files[i];
-            formData.append("Photo", file);
+            formData.append("Image", file);
         }
+
         $.ajax({
-            type: "POST",
+            type: 'POST',
             url: '/Shared/UploadImage',
             dataType: 'json',
             data: formData,
@@ -125,25 +125,34 @@
             processData: false
         })
             .done(function (response) {
-                if (response.Success) {
-                    $("#ImageURL").val(response.ImageURL)
-                    $("#categoryImage").attr("src", response.ImageURL)
+                console.log(response);
 
+                if (response.Success) {
+                    $("#ImageData").val(response.ImageData);
+                    $("#categoryImage").attr("src", "data:image/png;base64," + response.ImageData);
                 }
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FAIL");
-
+                console.log(XMLHttpRequest.responseText);
+                alert("Server error occurred. Please try again later.");
             });
-    })
+    });
 
 
     $("#updateBtn").click(function () {
         if ($("#editCategory").valid()) {
+            var formData = new FormData($("#editCategory")[0]); // Create a FormData object from the form
+
+            // Fetch the image file from the input field
+            var imageFile = $("#imageUpload")[0].files[0];
+            formData.set("Image", imageFile); // Set the "Image" field in the FormData object to the image file
+
             $.ajax({
                 type: 'POST',
                 url: '/Category/Edit',
-                data: $("#editCategory").serialize()
+                data: formData,
+                contentType: false,
+                processData: false,
             })
                 .done(function (response) {
                     $("#tableContiner").html(response);
@@ -164,7 +173,6 @@
             });
         }
     });
-
 
         $("#cancelBtn").click(function () {
             $("#actionContainer").html("");

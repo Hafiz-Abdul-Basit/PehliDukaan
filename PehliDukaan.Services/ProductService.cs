@@ -90,14 +90,22 @@ namespace PehliDukaan.Services {
                 return context.Products.Where(product => IDs.Contains(product.Id)).ToList();
             }
         }
-        public IEnumerable<CartProductResponse> GetCartProducts(IEnumerable<ProductCartCookie> cartItems) {
+       
+        private string GetImageUrlFromImageData(byte[] imageData) {
+            if (imageData != null && imageData.Length > 0) {
+                string base64String = Convert.ToBase64String(imageData);
+                return "data:image/jpeg;base64," + base64String;
+            }
 
+            return string.Empty;
+        }
+        public IEnumerable<CartProductResponse> GetCartProducts(IEnumerable<ProductCartCookie> cartItems) {
             using (var context = new PDContext()) {
                 var ids = cartItems.Select(x => x.Id);
                 var entities = context.Products.Where(product => ids.Contains(product.Id)).ToList();
-                return entities.Select(x => new Models.Responses.CartProductResponse() {
+                return entities.Select(x => new CartProductResponse() {
                     CategoryID = x.CategoryID,
-                    ImageURL = x.ImageURL,
+                    ImageData = GetImageUrlFromImageData(x.ImageData), // Convert image data to Base64 string
                     Price = x.Price,
                     Id = x.Id,
                     Description = x.Description,
@@ -105,8 +113,9 @@ namespace PehliDukaan.Services {
                     Quantity = cartItems.First(y => y.Id == x.Id).Quantity,
                 });
             }
-
         }
+
+
         public List<Product> GetProducts() {
            
 
@@ -167,6 +176,8 @@ namespace PehliDukaan.Services {
                 context.SaveChanges();
             }
         }
+
+
 
     }
 }

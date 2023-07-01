@@ -50,8 +50,7 @@ namespace PehliDukaan.web.Controllers {
 
             return View(model);
         }
-        public ActionResult Details(int ID) {
-
+        public ActionResult Details(int ID, string UpdatedUserId) {
             OrderDetailsViewModel model = new OrderDetailsViewModel();
 
             model.Order = orderService.GetOrderByID(ID);
@@ -60,7 +59,10 @@ namespace PehliDukaan.web.Controllers {
                 model.OrderBy = UserManager.FindById(model.Order.UserId);
             }
 
-            model.AvailableStatuses = new List<string>() { "Pending", "In Progress", "Delivered" };
+            model.AvailableStatuses = new List<string>() { "Pending", "In Progress","Dispatched", "Delivered","Cancelled" };
+
+            // Retrieve the UpdatedUser object and assign it to the model
+            model.UpdatedUser = UserManager.FindById(UpdatedUserId);
 
             return View(model);
         }
@@ -84,64 +86,20 @@ namespace PehliDukaan.web.Controllers {
 
             return result;
         }
-
+        InvoiceService invoiceService = new InvoiceService();
         public ActionResult GenerateInvoice(int orderId) {
             OrderService orderService = new OrderService();
             var order = orderService.GetOrderByID(orderId);
 
             if (order != null) {
+                var renderedBytes = invoiceService.GenerateInvoiceReport(order);
 
-                using (var context = new PDContext()) {
-                    // Fetch the required data using Entity Framework
-                    var orderItems = context.OrderItems
-                        .Where(item => item.OrderId == order.Id)
-                        .Include(item => item.Product)
-                        .ToList();
-
-                    DataTable orderTable = new DataTable();
-                    orderTable.Columns.Add("Id", typeof(int));
-                    orderTable.Columns.Add("Name", typeof(string));
-                    orderTable.Columns.Add("Quantity", typeof(int));
-                    orderTable.Columns.Add("Price", typeof(decimal)); // Update column name
-                    orderTable.Columns.Add("TotalAmount", typeof(decimal));
-                    orderTable.Columns.Add("Status", typeof(string));
-                    orderTable.Columns.Add("OrderedAt", typeof(DateTime));
-
-
-                    foreach (var orderItem in orderItems) {
-                        orderTable.Rows.Add(
-                            order.Id,
-                            orderItem.Product.Name,
-                            orderItem.Quantity,
-                            orderItem.Product.Price,
-                            orderItem.Quantity * orderItem.Product.Price,
-                            order.Status,
-                            order.OrderedAt
-                        );
-                    }
-
-                    var reportViewer = new ReportViewer();
-                        reportViewer.LocalReport.ReportPath = Server.MapPath("~/Report/InvoiceReport.rdlc");
-                        reportViewer.LocalReport.DataSources.Add(new ReportDataSource("ReportData", orderTable));
-
-                        var renderedBytes = reportViewer.LocalReport.Render("PDF");
-
-                        // Clear the response and set the necessary headers for file download
-                        Response.Clear();
-                        Response.ContentType = "application/pdf";
-                        Response.AddHeader("content-disposition", "attachment;filename=Invoice.pdf");
-
-                        // Write the renderedBytes to the response stream
-                        Response.BinaryWrite(renderedBytes);
-                        Response.Flush();
-                        Response.End();
-                    }
-                
-                
+                // Return the PDF as a downloadable file
+                return File(renderedBytes, "application/pdf", "Invoice.pdf");
             }
 
             return HttpNotFound();
         }
-    
+
     }
 }

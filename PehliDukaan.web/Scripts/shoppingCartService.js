@@ -21,9 +21,9 @@ function addProductInShoppingCart(productId, quantity = 1) {
 }
 
 function updateProductInShoppingCart({ id, quantity }) {
-  const cartItems = getShoppingCartItems();
+    const cartItems = getShoppingCartItems();
 
-  updateFromObject(cartItems, { id, quantity }, (x) => x.id === parseInt(id));
+  updateFromObject(cartItems, { id, quantity }, x => x.id === parseInt(id));
   addCookieJsonItems(cartItems, cookieName);
 }
 
@@ -43,7 +43,7 @@ function decreaseProductQuantityInShoppingCart(productId, quantity = 1) {
   const product = getProductFromShoppingCart(productId);
   product.quantity = product.quantity - parseInt(quantity);
 
-  if (product.quantity === 0) {
+  if (product.quantity <= 0) {
     removeProductFromShoppingCart(productId);
   } else {
     updateProductInShoppingCart(product);

@@ -28,7 +28,7 @@ namespace PehliDukaan.web.Models.ViewModels {
         public int CategoryId { get; set; }
         public decimal Price { get; set; }
 
-        public string ImageURL { get; set; }
+        public byte[] ImageData { get; set; }
         public List<Category> AvailableCategories { get; set; }
     }
 
@@ -40,7 +40,9 @@ namespace PehliDukaan.web.Models.ViewModels {
         public int CategoryId { get; set; } 
         public decimal Price { get; set; }
 
-        public string ImageURL { get; set; }
+        public HttpPostedFileBase Image { get; set; }
+
+        public byte[] ImageData { get; set; }
         public List<Category> AvailableCategories { get; set; }
     }
 

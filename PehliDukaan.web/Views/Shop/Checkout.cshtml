@@ -57,6 +57,7 @@ else {
                             <label for="address">Address</label>
                             <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" value="@Model.User.Address">
                         </div>
+                       
 
                         <hr class="mb-4">
                         <button id="placeOrderBtn" class="btn btn-primary btn-lg btn-block" type="button">Place Order!</button>
@@ -72,9 +73,10 @@ else {
           const ProductCartCookieName = "CartProducts";
           const products = getCookieJsonItems(ProductCartCookieName);
 
+
             $.ajax({
                 method: "POST",
-                url: '@Url.Action("PlaceOrder", "Shop")',
+                url: '@Url.Action("PlaceOrderAsync", "Shop")',
                 data: JSON.stringify(products),
                 contentType: "application/json; charset=utf-8",
             })

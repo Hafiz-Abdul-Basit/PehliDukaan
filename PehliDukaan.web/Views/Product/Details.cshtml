@@ -3,8 +3,8 @@
 @if (Model != null && Model.Product != null) {
     var defaultImageURL = "/Content/images/profile.png";
 
-    var imageURL = string.IsNullOrEmpty(Model.Product.ImageURL) ? defaultImageURL : Model.Product.ImageURL;
-    <!-- Page title -->
+    var base64Image = Model.Product.ImageData.Length == 0 ? defaultImageURL : Convert.ToBase64String(Model.Product.ImageData);
+    var imageURL = $"data:image/jpeg;base64,{base64Image}";   
     <div class="page-title parallax parallax1">
         <div class="container">
             <div class="row">

@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="CartProduct.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Order.cs" />

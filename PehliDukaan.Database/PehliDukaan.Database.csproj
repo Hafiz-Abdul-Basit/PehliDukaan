@@ -104,6 +104,22 @@
     <Compile Include="Migrations\202305161155591_rolesAdded.designer.cs">
       <DependentUpon>202305161155591_rolesAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306200642165_UpdateDatabase.cs" />
+    <Compile Include="Migrations\202306200642165_UpdateDatabase.designer.cs">
+      <DependentUpon>202306200642165_UpdateDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306200645544_updateProductEntity.cs" />
+    <Compile Include="Migrations\202306200645544_updateProductEntity.designer.cs">
+      <DependentUpon>202306200645544_updateProductEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306230514334_update.cs" />
+    <Compile Include="Migrations\202306230514334_update.designer.cs">
+      <DependentUpon>202306230514334_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202307011048434_AddToCartAdded.cs" />
+    <Compile Include="Migrations\202307011048434_AddToCartAdded.designer.cs">
+      <DependentUpon>202307011048434_AddToCartAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PDContext.cs" />
     <Compile Include="PehliDukaanDBInitializer.cs" />
@@ -143,6 +159,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305161155591_rolesAdded.resx">
       <DependentUpon>202305161155591_rolesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306200642165_UpdateDatabase.resx">
+      <DependentUpon>202306200642165_UpdateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306200645544_updateProductEntity.resx">
+      <DependentUpon>202306200645544_updateProductEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306230514334_update.resx">
+      <DependentUpon>202306230514334_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307011048434_AddToCartAdded.resx">
+      <DependentUpon>202307011048434_AddToCartAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

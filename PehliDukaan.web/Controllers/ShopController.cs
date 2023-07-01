@@ -7,11 +7,16 @@ using PehliDukaan.Services;
 using PehliDukaan.Services.Models;
 using PehliDukaan.Services.Models.Requests;
 using PehliDukaan.web.Models.ViewModels;
+using PehliDukaan.Services.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using PehliDukaan.web.Models;
 
 namespace PehliDukaan.web.Controllers {
     public class ShopController : Controller {
@@ -62,15 +67,20 @@ namespace PehliDukaan.web.Controllers {
         public ActionResult AddToCart() {
             CheckoutViewModel model = new CheckoutViewModel();
 
-            var CartProductsCookie = HttpUtility.UrlDecode(Request.Cookies["CartProducts"].Value);
-            IEnumerable<ProductCartCookie> cartItems = JsonConvert.DeserializeObject<IEnumerable<ProductCartCookie>>(CartProductsCookie);
+            // Get the cart products from cookies
+            string cartProductsCookie = HttpUtility.UrlDecode(Request.Cookies["CartProducts"].Value);
+            IEnumerable<ProductCartCookie> cartItems = JsonConvert.DeserializeObject<IEnumerable<ProductCartCookie>>(cartProductsCookie);
 
-            if (cartItems == null || cartItems.Any() == false) {
-                return View(model);
+            // Get the user ID
+            var userId = User.Identity.GetUserId();
+
+            // Add or update cart products in the database
+            cartService.AddOrUpdateProductsAsync(cartItems, userId).Wait();
+
+            if (cartItems != null && cartItems.Any()) {
+                model.CartProducts = productsService.GetCartProducts(cartItems);
+                model.User = UserManager.FindById(User.Identity.GetUserId());
             }
-
-            model.CartProducts = productsService.GetCartProducts(cartItems);
-            model.User = UserManager.FindById(User.Identity.GetUserId());
 
             return View(model);
         }
@@ -80,7 +90,7 @@ namespace PehliDukaan.web.Controllers {
         public ActionResult Checkout() {
             CheckoutViewModel model = new CheckoutViewModel();
 
-            var CartProductsCookie = HttpUtility.UrlDecode(Request.Cookies["CartProducts"].Value);
+            string CartProductsCookie = HttpUtility.UrlDecode(Request.Cookies["CartProducts"].Value);
             IEnumerable<ProductCartCookie> cartItems = JsonConvert.DeserializeObject<IEnumerable<ProductCartCookie>>(CartProductsCookie);
 
             if (cartItems == null || cartItems.Any() == false) {
@@ -89,21 +99,29 @@ namespace PehliDukaan.web.Controllers {
 
             model.CartProducts = productsService.GetCartProducts(cartItems);
             model.User = UserManager.FindById(User.Identity.GetUserId());
-
+         
             return View(model);
         }
+        CartService cartService = new CartService();
+        InvoiceService invoiceService = new InvoiceService();
+        EmailResponse emailResponse  = new EmailResponse();
+        [HttpPost]
+        public async Task<ActionResult> PlaceOrderAsync(IEnumerable<SaveOrderRequest> products) {
+            CheckoutViewModel model = new CheckoutViewModel();
 
-        public ActionResult PlaceOrder(IEnumerable<SaveOrderRequest> products) {
             JsonResult result = new JsonResult {
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
 
+            // Retrieve the user details from the model
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
             var boughtProducts = productsService.GetProducts(products.Select(x => x.Id));
 
             Order newOrder = new Order {
                 UserId = User.Identity.GetUserId(),
                 OrderedAt = DateTime.Now,
-                Status = "Pending",
+                Status = "In Progress",
                 TotalAmount = boughtProducts.Sum(x => x.Price * products.FirstOrDefault(y => y.Id == x.Id)?.Quantity ?? 0),
 
                 Items = boughtProducts.Select(x => new OrderItem() {
@@ -112,12 +130,36 @@ namespace PehliDukaan.web.Controllers {
                 }).ToList(),
             };
 
-            var rowsEffected = shopService.SaveOrder(newOrder);
+            // Get the user's email
+            var userEmail = user.Email;
 
-            result.Data = new { Success = rowsEffected > 0, Rows = rowsEffected };
+            // Send the order confirmation email
+
+            var rowsAffected = shopService.SaveOrder(newOrder);
+
+            if (rowsAffected > 0) {
+
+
+                // Generate the invoice report
+                var orderInvoiceBytes = invoiceService.GenerateInvoiceReport(newOrder);
+
+                // Get the product image
+
+                // Send the invoice report and product image as email attachments to the user
+                emailResponse.SendInvoiceReportEmail(orderInvoiceBytes, newOrder, userEmail);
+
+                // Remove cart items from the database
+                await cartService.RemoveCartItemsAsync(userId);
+
+                result.Data = new { Success = true, Rows = rowsAffected };
+            }
+
+            result.Data = new { Success = rowsAffected > 0, Rows = rowsAffected };
 
             return result;
         }
+
+
 
     }
 }

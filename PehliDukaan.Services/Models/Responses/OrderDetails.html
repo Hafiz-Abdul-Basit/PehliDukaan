@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        h1 {
+            color: #333333;
+        }
+        /* ... add more styles as needed */
+    </style>
+</head>
+<body>
+    <h1>Order Confirmation</h1>
+    <p>Thank you for your order. Here are the details:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+            <tr>
+                <td>
+                    <img src="@item.Product.ImageUrl" alt="@item.Product.Name" width="100" height="100">
+                    <br>
+                    @item.Product.Name
+                </td>
+                <td>@item.Quantity</td>
+                <td>@item.Product.Price</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <p>Total: @Model.TotalAmount</p>
+</body>
+</html>
