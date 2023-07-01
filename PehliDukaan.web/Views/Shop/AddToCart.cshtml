@@ -79,25 +79,7 @@ else {
 }
 
 
-
 <script>
-
-
-    function updateCartProductsInBackend() {
-        $.ajax({
-            type: "POST",
-            url: '/Cart/UpdateItems',
-            data: JSON.stringify(getShoppingCartItems()),
-            contentType: 'application/json'
-        })
-            .done(function (response) {
-                console.log(response);
-                updateCartProducts(); // Update the cart products count in the frontend
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                console.error({ XMLHttpRequest, textStatus, errorThrown });
-            });
-    }
     const ProductCartCookieName = "CartProducts";
 
     function productDelete(productId) {
@@ -105,19 +87,34 @@ else {
         location.reload();
     }
 
-
     function quantityChange(productId, value) {
         setProductQuantityInShoppingCart(productId, value);
         location.reload();
     }
 
-    document.querySelector(".productAddToCart").addEventListener("click", function () {
-        const productId = this.dataset.id;
+    function productAddToCart(productId) {
         addOrUpdateProductInShoppingCart(productId);
 
-        updateCartProducts();
-        swal("Done", "Product Added to Cart!", "success");
+        $.ajax({
+            type: "POST",
+            url: '/Cart/AddItems',
+            data: JSON.stringify(getShoppingCartItems()),
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response);
+                updateCartProducts();
+                swal("Done", "Product Added to Cart!", "success");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error({ xhr, textStatus, errorThrown });
+            }
+        });
+    }
+
+    document.querySelectorAll(".productAddToCart").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const productId = button.dataset.id;
+            productAddToCart(productId);
+        });
     });
-
-
 </script>

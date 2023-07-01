@@ -1093,7 +1093,7 @@
 
 /* Add cart */
 .product .product-item .add-to-cart {
-	background: #f63440;
+	background: #00008B;
 	position: absolute;
 	top: 100%;
 	left: 0px;
@@ -1101,15 +1101,15 @@
 	opacity: 0;
 	visibility: hidden;
 	-webkit-transition: all 0.3s ease-in-out;
-	   -moz-transition: all 0.3s ease-in-out;
-	    -ms-transition: all 0.3s ease-in-out;
-	     -o-transition: all 0.3s ease-in-out;
-	        transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 	-webkit-transform: translate(0px, 10px);
-	   -moz-transform: translate(0px, 10px);
-	    -ms-transform: translate(0px, 10px);
-	     -o-transform: translate(0px, 10px);
-	        transform: translate(0px, 10px);
+	-moz-transform: translate(0px, 10px);
+	-ms-transform: translate(0px, 10px);
+	-o-transform: translate(0px, 10px);
+	transform: translate(0px, 10px);
 }
 
 .product .product-item .add-to-cart a {
@@ -2432,7 +2432,7 @@
 }
 
 .flat-filter.style-1 li.active a {
-	background-color: #f63440;
+	background-color: #00008B;
 	color: #fff;
 	border-color: #f63440;
 }

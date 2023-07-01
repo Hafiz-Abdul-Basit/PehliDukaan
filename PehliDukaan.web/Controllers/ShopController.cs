@@ -65,22 +65,17 @@ namespace PehliDukaan.web.Controllers {
 
         [Authorize]
         public ActionResult AddToCart() {
-            CheckoutViewModel model = new CheckoutViewModel();
+        CheckoutViewModel model = new CheckoutViewModel();
 
-            // Get the cart products from cookies
-            string cartProductsCookie = HttpUtility.UrlDecode(Request.Cookies["CartProducts"].Value);
-            IEnumerable<ProductCartCookie> cartItems = JsonConvert.DeserializeObject<IEnumerable<ProductCartCookie>>(cartProductsCookie);
+            var CartProductsCookie = HttpUtility.UrlDecode(Request.Cookies["CartProducts"].Value);
+            IEnumerable<ProductCartCookie> cartItems = JsonConvert.DeserializeObject<IEnumerable<ProductCartCookie>>(CartProductsCookie);
 
-            // Get the user ID
-            var userId = User.Identity.GetUserId();
-
-            // Add or update cart products in the database
-            cartService.AddOrUpdateProductsAsync(cartItems, userId).Wait();
-
-            if (cartItems != null && cartItems.Any()) {
-                model.CartProducts = productsService.GetCartProducts(cartItems);
-                model.User = UserManager.FindById(User.Identity.GetUserId());
+            if (cartItems == null || cartItems.Any() == false) {
+                return View(model);
             }
+
+            model.CartProducts = productsService.GetCartProducts(cartItems);
+            model.User = UserManager.FindById(User.Identity.GetUserId());
 
             return View(model);
         }

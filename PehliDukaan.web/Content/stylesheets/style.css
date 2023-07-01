@@ -47,6 +47,9 @@
 		-webkit-text-size-adjust: 100%;
 		   -ms-text-size-adjust: 100%;
 	}
+	a:hover{
+		background-color:darkblue !important;
+	}
 .wrap-td {
 	width: 1px;
 	white-space: nowrap;
